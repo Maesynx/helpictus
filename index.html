@@ -1,0 +1,534 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
+<title>HelpIctus</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Lexend:wght@500;600;700&display=swap">
+<style>
+/* Diseño: una sola columna estrecha, tarjetas grandes y barra inferior fija con 5 secciones. Pensado para leer fácil (Atkinson Hyperlegible) y tocar fácil (botones de 56px o más). */
+:root{
+  --bg:#f3f6f8;
+  --surface:#ffffff;
+  --ink:#16232f;
+  --ink-soft:#4a5a68;
+  --line:#d3dde4;
+  --accent:#1f5f8b;
+  --accent-ink:#ffffff;
+  --accent-soft:#e1eef7;
+  --ok:#2c7a4b;
+  --ok-soft:#e2f2e8;
+  --warn:#9a5b00;
+  --warn-soft:#fdf0d9;
+  --danger:#b3261e;
+  --danger-soft:#fbe4e2;
+  --font-body:"Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  --font-display:"Lexend", "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
+  --scale:1;
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f171e; --surface:#18232d; --ink:#eef3f6; --ink-soft:#a9b8c4; --line:#2c3b48;
+    --accent:#7cb8e4; --accent-ink:#0b1720; --accent-soft:#1d3346;
+    --ok:#7fd3a0; --ok-soft:#173327; --warn:#f2bf6b; --warn-soft:#3a2c12;
+    --danger:#ff9a91; --danger-soft:#3d1c1a; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f171e; --surface:#18232d; --ink:#eef3f6; --ink-soft:#a9b8c4; --line:#2c3b48;
+  --accent:#7cb8e4; --accent-ink:#0b1720; --accent-soft:#1d3346;
+  --ok:#7fd3a0; --ok-soft:#173327; --warn:#f2bf6b; --warn-soft:#3a2c12;
+  --danger:#ff9a91; --danger-soft:#3d1c1a; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{font-size:calc(18px * var(--scale))}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:1rem;line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:0 calc(96px + env(safe-area-inset-bottom, 0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:1.2}
+h2{font-size:1.5rem}
+h3{font-size:1.15rem}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:640px;margin:0 auto}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand svg{flex:none}
+.brand b{font-family:var(--font-display);font-size:1.2rem;letter-spacing:.01em}
+.brand small{display:block;color:var(--ink-soft);font-size:.75rem;line-height:1.2}
+.tools{display:flex;gap:6px;flex:none}
+.tool{min-width:48px;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:0 10px;font-weight:700}
+
+.demo{margin-top:14px;background:var(--warn-soft);color:var(--ink);border:1px solid var(--warn);border-radius:var(--radius);
+  padding:12px 14px;font-size:.85rem;display:flex;gap:10px;align-items:flex-start}
+.demo strong{color:var(--warn)}
+
+main section{display:flex;flex-direction:column;gap:16px;padding-top:20px}
+.intro{color:var(--ink-soft)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card.hi{border-color:var(--accent);background:var(--accent-soft)}
+.label{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);font-weight:700}
+.big{font-family:var(--font-display);font-size:1.35rem;font-weight:600}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.grow{flex:1;min-width:0}
+.muted{color:var(--ink-soft)}
+.list{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+
+.btn{min-height:56px;border-radius:12px;border:2px solid var(--accent);background:var(--accent);color:var(--accent-ink);
+  font-weight:700;padding:0 18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.danger{background:var(--danger);border-color:var(--danger);color:#fff}
+.btn.small{min-height:48px;padding:0 14px;font-size:.9rem}
+.btn.full{width:100%}
+
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick button{min-height:84px;border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);cursor:pointer;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;padding:12px 14px;text-align:left}
+.quick button b{font-family:var(--font-display);font-size:1.05rem}
+.quick button span{font-size:.8rem;color:var(--ink-soft)}
+
+.item{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+.when{flex:none;width:76px;text-align:center;font-variant-numeric:tabular-nums}
+.when b{display:block;font-family:var(--font-display);font-size:1.3rem}
+.when span{font-size:.75rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.item .grow b{display:block}
+.item.done{background:var(--ok-soft);border-color:var(--ok)}
+
+.check{display:flex;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;min-height:60px}
+.check input{width:28px;height:28px;accent-color:var(--ok);flex:none}
+.check.on{background:var(--ok-soft);border-color:var(--ok)}
+.group h3{margin-bottom:6px}
+.progress{height:12px;border-radius:999px;background:var(--line);overflow:hidden}
+.progress i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+
+form.add{display:grid;gap:10px}
+form.add .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label.f{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.9rem;min-width:0}
+input[type=text],input[type=tel],input[type=date],input[type=time],select{min-height:52px;border:1px solid var(--line);border-radius:10px;padding:0 12px;background:var(--bg);width:100%}
+details.adder summary{cursor:pointer;list-style:none}
+details.adder summary::-webkit-details-marker{display:none}
+
+.emerg{background:var(--danger-soft);border-color:var(--danger)}
+.emerg .big{color:var(--danger)}
+.phone{font-variant-numeric:tabular-nums;font-size:1.15rem;font-weight:700;user-select:all}
+
+.pic{font-size:7rem;line-height:1;text-align:center;padding:18px 0}
+.word{font-family:var(--font-display);font-size:2.2rem;text-align:center;font-weight:700;min-height:2.8rem;letter-spacing:.02em}
+.ex-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dots{display:flex;gap:6px;justify-content:center}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--accent)}
+.soon{border-style:dashed}
+
+nav.bar{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
+  padding:6px max(8px, env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px, env(safe-area-inset-left,0px))}
+nav.bar .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+nav.bar button{min-height:64px;border:0;background:transparent;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--ink-soft);font-size:.72rem;font-weight:700}
+nav.bar button svg{width:28px;height:28px}
+nav.bar button[aria-current="page"]{background:var(--accent-soft);color:var(--accent)}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom,0px));z-index:8;max-width:min(560px, calc(100% - 32px));
+  background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:12px;font-weight:700}
+.alarm{position:fixed;inset:auto 0 calc(80px + env(safe-area-inset-bottom,0px)) 0;z-index:9;padding:0 max(16px, env(safe-area-inset-right,0px)) 0 max(16px, env(safe-area-inset-left,0px))}
+.alarm .card{max-width:600px;margin:0 auto;border:3px solid var(--accent);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.confirm{display:flex;gap:8px;flex-wrap:wrap}
+footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+@media (max-width:380px){.quick{grid-template-columns:1fr}.ex-actions{grid-template-columns:1fr}form.add .two{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="2"/><g fill="currentColor"><circle cx="13" cy="17" r="2"/><circle cx="20" cy="13" r="2"/><circle cx="27" cy="17" r="2"/><circle cx="16" cy="25" r="2"/><circle cx="24" cy="25" r="2"/></g><g stroke="currentColor" stroke-width="1.2" fill="none"><path d="M13 17L20 13L27 17L24 25L16 25Z"/><path d="M13 17L24 25M27 17L16 25M20 13L16 25"/></g></svg>
+      <div><b>HelpIctus</b><small>Juntos en tu camino a la recuperación</small></div>
+    </div>
+    <div class="tools">
+      <button class="tool" id="t-size" type="button" aria-label="Cambiar tamaño de letra">A<span style="font-size:1.25em">A</span></button>
+      <button class="tool" id="t-read" type="button" aria-label="Leer esta pantalla en voz alta">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="demo" role="note"><span><strong>Prototipo de demostración.</strong> Todos los datos son ficticios. HelpIctus no sustituye la atención de los profesionales sanitarios.</span></div>
+
+  <main>
+    <!-- HOY -->
+    <section id="s-hoy" aria-labelledby="h-hoy">
+      <div><h2 id="h-hoy">Hola, Carmen</h2><p class="intro" id="hoy-fecha"></p></div>
+
+      <div class="card hi" id="hoy-proximo"></div>
+
+      <div class="quick">
+        <button type="button" data-go="avisos"><b>Avisos</b><span id="q-avisos"></span></button>
+        <button type="button" data-go="agenda"><b>Citas</b><span id="q-citas"></span></button>
+        <button type="button" data-go="contactos"><b>Llamar</b><span>Familia y médicos</span></button>
+        <button type="button" data-go="practicar"><b>Practicar</b><span>Ejercicios de palabras</span></button>
+      </div>
+
+      <div class="card">
+        <div class="row"><div class="grow"><h3>Mi día</h3><p class="muted" id="dia-resumen"></p></div></div>
+        <div class="progress" aria-hidden="true"><i id="dia-bar"></i></div>
+        <p class="muted" style="font-size:.9rem">No pasa nada si hoy no se completa todo. Cada pequeño paso cuenta.</p>
+      </div>
+      <div id="checklist" class="list"></div>
+    </section>
+
+    <!-- AGENDA -->
+    <section id="s-agenda" aria-labelledby="h-agenda" hidden>
+      <div><h2 id="h-agenda">Citas</h2><p class="intro">Médicos, rehabilitación y otras citas.</p></div>
+      <ul class="list" id="citas"></ul>
+      <details class="adder card">
+        <summary class="btn ghost full">Añadir una cita</summary>
+        <form class="add" id="f-cita">
+          <label class="f" for="c-que">Qué es<input id="c-que" type="text" placeholder="Ej.: Logopeda" required></label>
+          <div class="two">
+            <label class="f" for="c-fecha">Día<input id="c-fecha" type="date" required></label>
+            <label class="f" for="c-hora">Hora<input id="c-hora" type="time" required></label>
+          </div>
+          <label class="f" for="c-donde">Dónde<input id="c-donde" type="text" placeholder="Ej.: Centro de salud"></label>
+          <button class="btn" type="submit">Guardar cita</button>
+        </form>
+      </details>
+    </section>
+
+    <!-- AVISOS -->
+    <section id="s-avisos" aria-labelledby="h-avisos" hidden>
+      <div><h2 id="h-avisos">Avisos de hoy</h2><p class="intro">Medicación y tareas, tal como las indicó su médico. HelpIctus solo recuerda: no decide dosis ni horarios.</p></div>
+      <ul class="list" id="avisos"></ul>
+      <details class="adder card">
+        <summary class="btn ghost full">Añadir un aviso</summary>
+        <form class="add" id="f-aviso">
+          <label class="f" for="a-que">Qué hay que recordar<input id="a-que" type="text" placeholder="Ej.: Pastilla de la mañana" required></label>
+          <div class="two">
+            <label class="f" for="a-hora">Hora<input id="a-hora" type="time" required></label>
+            <label class="f" for="a-tipo">Tipo
+              <select id="a-tipo"><option value="med">Medicación</option><option value="otro">Otra tarea</option></select>
+            </label>
+          </div>
+          <label class="f" for="a-nota">Nota (opcional)<input id="a-nota" type="text" placeholder="Ej.: Con el desayuno"></label>
+          <button class="btn" type="submit">Guardar aviso</button>
+        </form>
+      </details>
+      <p class="muted" style="font-size:.85rem">En este prototipo el aviso suena solo con la página abierta. En la versión final se podrán activar notificaciones en el móvil.</p>
+    </section>
+
+    <!-- CONTACTOS -->
+    <section id="s-contactos" aria-labelledby="h-contactos" hidden>
+      <div><h2 id="h-contactos">Contactos</h2><p class="intro">Las personas a las que llamar, en un solo sitio.</p></div>
+      <div class="card emerg">
+        <p class="big">Emergencias: 112</p>
+        <p>Si aparece de pronto la boca torcida, debilidad en un brazo o una pierna, o dificultad para hablar: llame al 112 sin esperar.</p>
+        <a class="btn danger full" href="tel:112">Llamar al 112</a>
+      </div>
+      <ul class="list" id="contactos"></ul>
+      <details class="adder card">
+        <summary class="btn ghost full">Añadir un contacto</summary>
+        <form class="add" id="f-contacto">
+          <label class="f" for="k-nombre">Nombre<input id="k-nombre" type="text" required></label>
+          <label class="f" for="k-rol">Quién es<input id="k-rol" type="text" placeholder="Ej.: Hija, médico de cabecera"></label>
+          <label class="f" for="k-tel">Teléfono<input id="k-tel" type="tel" inputmode="tel" required></label>
+          <button class="btn" type="submit">Guardar contacto</button>
+        </form>
+      </details>
+    </section>
+
+    <!-- PRACTICAR -->
+    <section id="s-practicar" aria-labelledby="h-practicar" hidden>
+      <div><h2 id="h-practicar">Practicar</h2><p class="intro">Ejercicios para practicar en casa, a su ritmo.</p></div>
+      <div class="demo" role="note"><span><strong>Ejemplo pendiente de revisión por un logopeda.</strong> Practique solo si su logopeda lo considera adecuado. Si se cansa o se frustra, pare: descansar también es parte del camino.</span></div>
+
+      <div class="card">
+        <div class="row"><div class="grow"><p class="label">Nombrar objetos de casa</p><h3 id="ex-q">¿Qué es esto?</h3></div><div class="dots" id="ex-dots" aria-hidden="true"></div></div>
+        <div class="pic" id="ex-pic" role="img" aria-label="Imagen del objeto"></div>
+        <p class="word" id="ex-word" aria-live="polite"></p>
+        <div class="ex-actions">
+          <button class="btn ghost" type="button" id="ex-pista">Ver una pista</button>
+          <button class="btn ghost" type="button" id="ex-oir">Escuchar la palabra</button>
+        </div>
+        <div class="ex-actions">
+          <button class="btn" type="button" id="ex-dije">Lo he dicho</button>
+          <button class="btn ghost" type="button" id="ex-sig">Pasar al siguiente</button>
+        </div>
+        <p class="muted" id="ex-msg" style="font-size:.9rem" aria-live="polite"></p>
+      </div>
+
+      <div class="card soon">
+        <h3>Otros ejercicios</h3>
+        <p class="muted">Se añadirán ejercicios de otras áreas solo cuando los haya revisado el profesional que corresponda.</p>
+      </div>
+    </section>
+
+    <footer class="note">
+      <p>HelpIctus · prototipo para enseñar la idea a profesionales y familias. Los datos se guardan solo en este navegador.</p>
+      <div class="confirm" style="margin-top:10px" id="reset-box">
+        <button class="btn ghost small" type="button" id="reset">Volver a los datos de ejemplo</button>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<div class="alarm" id="alarm" hidden>
+  <div class="card" role="alertdialog" aria-labelledby="al-t">
+    <p class="label">Aviso</p>
+    <p class="big" id="al-t"></p>
+    <p class="muted" id="al-n"></p>
+    <div class="ex-actions">
+      <button class="btn" type="button" id="al-ok">Hecho</button>
+      <button class="btn ghost" type="button" id="al-later">Recordar en 10 min</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden role="status"></div>
+
+<nav class="bar" aria-label="Secciones">
+  <div class="in">
+    <button type="button" data-go="hoy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Hoy</button>
+    <button type="button" data-go="agenda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Citas</button>
+    <button type="button" data-go="avisos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Avisos</button>
+    <button type="button" data-go="contactos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Llamar</button>
+    <button type="button" data-go="practicar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Practicar</button>
+  </div>
+</nav>
+
+<script>
+(function(){
+  'use strict';
+  /* ---------- Utilidades ---------- */
+  const $ = s => document.querySelector(s);
+  const pad = n => String(n).padStart(2,'0');
+  const hoyISO = () => { const d=new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); };
+  const masDias = n => { const d=new Date(); d.setDate(d.getDate()+n); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); };
+  const ahoraHM = () => { const d=new Date(); return pad(d.getHours())+':'+pad(d.getMinutes()); };
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmtDia = iso => { const [y,m,d]=iso.split('-').map(Number); return new Date(y,m-1,d).toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'}); };
+  const corto = iso => { const [y,m,d]=iso.split('-').map(Number); const f=new Date(y,m-1,d); return {dia:f.getDate(), mes:f.toLocaleDateString('es-ES',{month:'short'}).replace('.','')}; };
+  const uid = () => Math.random().toString(36).slice(2,9);
+
+  /* ---------- Datos de ejemplo (ficticios) ---------- */
+  function ejemplo(){
+    return {
+      citas:[
+        {id:uid(), que:'Logopeda', fecha:masDias(1), hora:'10:30', donde:'Centro de rehabilitación'},
+        {id:uid(), que:'Revisión con neurología', fecha:masDias(6), hora:'09:15', donde:'Hospital, consultas externas'},
+        {id:uid(), que:'Enfermera del centro de salud', fecha:masDias(12), hora:'12:00', donde:'Centro de salud'}
+      ],
+      avisos:[
+        {id:uid(), que:'Medicación de la mañana', hora:'09:00', tipo:'med', nota:'Según la pauta de su médico'},
+        {id:uid(), que:'Medicación de la noche', hora:'21:00', tipo:'med', nota:'Según la pauta de su médico'},
+        {id:uid(), que:'Paseo corto con Antonio', hora:'18:00', tipo:'otro', nota:''}
+      ],
+      contactos:[
+        {id:uid(), nombre:'Antonio', rol:'Hijo · cuidador principal', tel:'600 000 001'},
+        {id:uid(), nombre:'Centro de salud', rol:'Cita previa', tel:'955 000 002'},
+        {id:uid(), nombre:'Lucía', rol:'Logopeda', tel:'600 000 003'}
+      ],
+      hechos:{}, // { 'AAAA-MM-DD': { idAviso:true, 'chk-..':true } }
+      escala:1
+    };
+  }
+  const CLAVE='helpictus-demo-v1';
+  let st;
+  try { st = JSON.parse(localStorage.getItem(CLAVE)) || ejemplo(); } catch(e){ st = ejemplo(); }
+  function guardar(){ try{ localStorage.setItem(CLAVE, JSON.stringify(st)); }catch(e){} }
+  const hechosHoy = () => (st.hechos[hoyISO()] ||= {});
+
+  /* ---------- Checklist del día (basada en el documento de María) ---------- */
+  const CHECK = [
+    {g:'Cuidado personal', items:['Aseo o ducha','Cepillarse los dientes','Vestirse (con la ayuda justa)']},
+    {g:'Comida y bebida', items:['Desayuno','Comida','Merienda','Cena','Beber agua a lo largo del día (según indicación médica)']},
+    {g:'Medicación y terapia', items:['Medicación del día, según la pauta','Ejercicios que indicó el equipo de rehabilitación']},
+    {g:'Ánimo y descanso', items:['Una conversación tranquila','Salir o dar un paseo, si es posible','Descansar bien']}
+  ];
+
+  /* ---------- Navegación ---------- */
+  const SECC=['hoy','agenda','avisos','contactos','practicar'];
+  function ir(n, foco){
+    if(!SECC.includes(n)) n='hoy';
+    SECC.forEach(s => { $('#s-'+s).hidden = s!==n; });
+    document.querySelectorAll('nav.bar button').forEach(b => { if(b.dataset.go===n) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+    try{ history.replaceState(null,'','#'+n); }catch(e){}
+    window.scrollTo({top:0});
+    if(foco) $('#h-'+n).setAttribute('tabindex','-1'), $('#h-'+n).focus({preventScroll:true});
+    try{ window.speechSynthesis && window.speechSynthesis.cancel(); }catch(e){}
+  }
+  document.addEventListener('click', e => { const b=e.target.closest('[data-go]'); if(b){ ir(b.dataset.go, true); } });
+
+  /* ---------- Render ---------- */
+  function citasOrdenadas(){ return st.citas.filter(c => c.fecha >= hoyISO()).sort((a,b)=> (a.fecha+a.hora).localeCompare(b.fecha+b.hora)); }
+  function avisosOrdenados(){ return [...st.avisos].sort((a,b)=>a.hora.localeCompare(b.hora)); }
+
+  function renderHoy(){
+    $('#hoy-fecha').textContent = 'Hoy es ' + fmtDia(hoyISO()) + '.';
+    const h = hechosHoy(), ahora = ahoraHM();
+    const pend = avisosOrdenados().filter(a => !h[a.id]);
+    const sig = pend.find(a => a.hora >= ahora) || pend[0];
+    const cita = citasOrdenadas()[0];
+    let html = '<p class="label">Lo próximo</p>';
+    if(sig){ html += '<p class="big">'+esc(sig.hora)+' · '+esc(sig.que)+'</p>'; }
+    else { html += '<p class="big">Todos los avisos de hoy están hechos</p>'; }
+    if(cita){ html += '<p>Próxima cita: <b>'+esc(cita.que)+'</b>, '+esc(fmtDia(cita.fecha))+' a las '+esc(cita.hora)+'.</p>'; }
+    $('#hoy-proximo').innerHTML = html;
+    $('#q-avisos').textContent = pend.length ? pend.length+' pendientes hoy' : 'Todo hecho hoy';
+    $('#q-citas').textContent = cita ? 'Próxima: '+corto(cita.fecha).dia+' '+corto(cita.fecha).mes : 'Sin citas próximas';
+
+    const cont = $('#checklist'); cont.innerHTML='';
+    let total=0, hechos=0;
+    CHECK.forEach((grp,gi) => {
+      const box = document.createElement('div'); box.className='group';
+      box.innerHTML = '<h3>'+esc(grp.g)+'</h3>';
+      const ul = document.createElement('div'); ul.className='list';
+      grp.items.forEach((t,ii) => {
+        const k='chk-'+gi+'-'+ii; total++; if(h[k]) hechos++;
+        const lab=document.createElement('label'); lab.className='check'+(h[k]?' on':''); lab.htmlFor=k;
+        lab.innerHTML='<input type="checkbox" id="'+k+'" '+(h[k]?'checked':'')+'><span>'+esc(t)+'</span>';
+        lab.querySelector('input').addEventListener('change', ev => { hechosHoy()[k]=ev.target.checked; guardar(); renderHoy(); });
+        ul.appendChild(lab);
+      });
+      box.appendChild(ul); cont.appendChild(box);
+    });
+    $('#dia-resumen').textContent = hechos+' de '+total+' cosas hechas hoy';
+    $('#dia-bar').style.width = (total? hechos/total*100 : 0)+'%';
+  }
+
+  function renderCitas(){
+    const ul=$('#citas'); const cs=citasOrdenadas();
+    ul.innerHTML = cs.length ? '' : '<li class="card muted">No hay citas próximas. Puede añadir una abajo.</li>';
+    cs.forEach(c => {
+      const f=corto(c.fecha);
+      const li=document.createElement('li'); li.className='item';
+      li.innerHTML='<div class="when"><b>'+f.dia+'</b><span>'+esc(f.mes)+'</span></div><div class="grow"><b>'+esc(c.que)+'</b><span class="muted">'+esc(fmtDia(c.fecha))+' · '+esc(c.hora)+(c.donde?'<br>'+esc(c.donde):'')+'</span></div>'+
+        '<button class="btn ghost small" type="button" aria-label="Borrar cita '+esc(c.que)+'">Borrar</button>';
+      li.querySelector('button').addEventListener('click', () => pedirConfirmacion(li, '¿Borrar esta cita?', () => { st.citas=st.citas.filter(x=>x.id!==c.id); guardar(); todo(); aviso('Cita borrada'); }));
+      ul.appendChild(li);
+    });
+  }
+
+  function renderAvisos(){
+    const ul=$('#avisos'); const h=hechosHoy();
+    ul.innerHTML='';
+    avisosOrdenados().forEach(a => {
+      const li=document.createElement('li'); li.className='item'+(h[a.id]?' done':'');
+      li.innerHTML='<div class="when"><b>'+esc(a.hora)+'</b><span>'+(a.tipo==='med'?'Medicación':'Tarea')+'</span></div><div class="grow"><b>'+esc(a.que)+'</b>'+(a.nota?'<span class="muted">'+esc(a.nota)+'</span>':'')+'</div>'+
+        '<button class="btn small '+(h[a.id]?'ghost':'')+'" type="button">'+(h[a.id]?'Hecho ✓':'Marcar hecho')+'</button>';
+      li.querySelector('button').addEventListener('click', () => { hechosHoy()[a.id]=!h[a.id]; guardar(); todo(); });
+      ul.appendChild(li);
+    });
+  }
+
+  function renderContactos(){
+    const ul=$('#contactos'); ul.innerHTML='';
+    st.contactos.forEach(c => {
+      const li=document.createElement('li'); li.className='card';
+      li.innerHTML='<div class="row"><div class="grow"><p class="big">'+esc(c.nombre)+'</p><p class="muted">'+esc(c.rol||'')+'</p><p class="phone">'+esc(c.tel)+'</p></div></div>'+
+        '<div class="ex-actions"><a class="btn" href="tel:'+esc(c.tel.replace(/\s/g,''))+'">Llamar</a><button class="btn ghost" type="button" data-copy>Copiar número</button></div>';
+      li.querySelector('[data-copy]').addEventListener('click', () => {
+        const ok=()=>aviso('Número copiado');
+        try{ navigator.clipboard.writeText(c.tel).then(ok, ()=>seleccionar(li.querySelector('.phone'))); }catch(e){ seleccionar(li.querySelector('.phone')); }
+      });
+      ul.appendChild(li);
+    });
+  }
+  function seleccionar(el){ const r=document.createRange(); r.selectNodeContents(el); const s=getSelection(); s.removeAllRanges(); s.addRange(r); aviso('Número seleccionado: puede copiarlo'); }
+
+  function todo(){ renderHoy(); renderCitas(); renderAvisos(); renderContactos(); }
+
+  /* ---------- Formularios ---------- */
+  $('#f-cita').addEventListener('submit', e => { e.preventDefault();
+    st.citas.push({id:uid(), que:$('#c-que').value.trim(), fecha:$('#c-fecha').value, hora:$('#c-hora').value, donde:$('#c-donde').value.trim()});
+    guardar(); e.target.reset(); e.target.closest('details').open=false; todo(); aviso('Cita guardada'); });
+  $('#f-aviso').addEventListener('submit', e => { e.preventDefault();
+    st.avisos.push({id:uid(), que:$('#a-que').value.trim(), hora:$('#a-hora').value, tipo:$('#a-tipo').value, nota:$('#a-nota').value.trim()});
+    guardar(); e.target.reset(); e.target.closest('details').open=false; todo(); aviso('Aviso guardado'); });
+  $('#f-contacto').addEventListener('submit', e => { e.preventDefault();
+    st.contactos.push({id:uid(), nombre:$('#k-nombre').value.trim(), rol:$('#k-rol').value.trim(), tel:$('#k-tel').value.trim()});
+    guardar(); e.target.reset(); e.target.closest('details').open=false; todo(); aviso('Contacto guardado'); });
+
+  /* ---------- Confirmación dentro de la página ---------- */
+  function pedirConfirmacion(cont, texto, siOk){
+    if(cont.querySelector('.confirm-in')) return;
+    const d=document.createElement('div'); d.className='confirm confirm-in'; d.style.width='100%';
+    d.innerHTML='<span class="grow">'+esc(texto)+'</span><button class="btn danger small" type="button">Sí, borrar</button><button class="btn ghost small" type="button">No</button>';
+    cont.style.flexWrap='wrap'; cont.appendChild(d);
+    const [si,no]=d.querySelectorAll('button'); si.addEventListener('click', siOk); no.addEventListener('click', ()=>d.remove()); no.focus();
+  }
+  $('#reset').addEventListener('click', () => pedirConfirmacion($('#reset-box'), 'Se borrarán los cambios y volverán los datos de ejemplo.', () => {
+    st=ejemplo(); guardar(); todo(); document.querySelector('#reset-box .confirm-in')?.remove(); aviso('Datos de ejemplo restaurados'); }));
+
+  /* ---------- Mensajes breves ---------- */
+  let tt; function aviso(t){ const el=$('#toast'); el.textContent=t; el.hidden=false; clearTimeout(tt); tt=setTimeout(()=>el.hidden=true, 2600); }
+
+  /* ---------- Voz ---------- */
+  let voz=null;
+  function elegirVoz(){ try{ const vs=speechSynthesis.getVoices(); voz = vs.find(v=>v.lang==='es-ES') || vs.find(v=>v.lang && v.lang.startsWith('es')) || null; }catch(e){} }
+  if('speechSynthesis' in window){ elegirVoz(); speechSynthesis.onvoiceschanged = elegirVoz; }
+  function decir(t){
+    if(!('speechSynthesis' in window)){ aviso('Este navegador no puede leer en voz alta'); return; }
+    speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang='es-ES'; u.rate=.85; if(voz) u.voice=voz; speechSynthesis.speak(u);
+  }
+  $('#t-read').addEventListener('click', () => {
+    const s=document.querySelector('main section:not([hidden])');
+    const partes=[...s.querySelectorAll('h2, .intro, .big, .item .grow, .check span, h3')].filter(x=>x.offsetParent!==null).map(x=>x.innerText.trim()).filter(Boolean);
+    decir(partes.slice(0,14).join('. '));
+  });
+
+  /* ---------- Tamaño de letra ---------- */
+  const ESCALAS=[1,1.15,1.3];
+  function aplicarEscala(){ document.documentElement.style.setProperty('--scale', st.escala||1); }
+  $('#t-size').addEventListener('click', () => { const i=ESCALAS.indexOf(st.escala||1); st.escala=ESCALAS[(i+1)%ESCALAS.length]; aplicarEscala(); guardar(); aviso(st.escala===1?'Letra normal':st.escala===1.15?'Letra grande':'Letra muy grande'); });
+
+  /* ---------- Ejercicio de ejemplo: nombrar objetos ---------- */
+  const OBJ=[
+    {e:'🔑', w:'llave', p:'Empieza por «lla…»'},
+    {e:'🍎', w:'manzana', p:'Empieza por «man…»'},
+    {e:'🪑', w:'silla', p:'Empieza por «si…»'},
+    {e:'👓', w:'gafas', p:'Empieza por «ga…»'},
+    {e:'🥄', w:'cuchara', p:'Empieza por «cu…»'},
+    {e:'⌚', w:'reloj', p:'Empieza por «re…»'}
+  ];
+  let ix=0, dichos=0;
+  function pintarEj(){
+    const o=OBJ[ix];
+    $('#ex-pic').textContent=o.e; $('#ex-pic').setAttribute('aria-label','Imagen de un objeto de casa');
+    $('#ex-word').textContent=''; $('#ex-msg').textContent='Tómese su tiempo. Puede pedir una pista o escuchar la palabra cuando quiera.';
+    $('#ex-dots').innerHTML=OBJ.map((_,i)=>'<i class="'+(i<=ix?'on':'')+'"></i>').join('');
+  }
+  $('#ex-pista').addEventListener('click', ()=>{ $('#ex-word').textContent=OBJ[ix].p; });
+  $('#ex-oir').addEventListener('click', ()=>{ $('#ex-word').textContent=OBJ[ix].w; decir(OBJ[ix].w); });
+  function siguiente(){
+    if(ix<OBJ.length-1){ ix++; pintarEj(); }
+    else { $('#ex-pic').textContent='🌿'; $('#ex-word').textContent='¡Buen trabajo!'; $('#ex-msg').textContent='Ha practicado '+OBJ.length+' palabras ('+dichos+' dichas). Puede volver a empezar cuando quiera, o descansar.'; ix=-1; dichos=0; }
+  }
+  $('#ex-dije').addEventListener('click', ()=>{ if(ix<0){ix=0;pintarEj();return;} dichos++; $('#ex-word').textContent=OBJ[ix].w; $('#ex-msg').textContent='Muy bien. Cada intento cuenta.'; setTimeout(siguiente, 1400); });
+  $('#ex-sig').addEventListener('click', ()=>{ if(ix<0){ix=0;pintarEj();return;} siguiente(); });
+
+  /* ---------- Avisos con la página abierta ---------- */
+  let audioCtx=null, avisoActual=null; const pospuestos={}; const lanzados={};
+  document.addEventListener('pointerdown', ()=>{ try{ audioCtx ||= new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} }, {once:true});
+  function pitido(){ try{ if(!audioCtx) return; [0,.35].forEach(t=>{ const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.frequency.value=660; o.connect(g); g.connect(audioCtx.destination); g.gain.setValueAtTime(.0001,audioCtx.currentTime+t); g.gain.exponentialRampToValueAtTime(.2,audioCtx.currentTime+t+.02); g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+t+.3); o.start(audioCtx.currentTime+t); o.stop(audioCtx.currentTime+t+.32); }); }catch(e){} }
+  function revisar(){
+    if(avisoActual) return;
+    const ahora=ahoraHM(), h=hechosHoy(), ms=Date.now();
+    const a=st.avisos.find(a => !h[a.id] && ((a.hora===ahora && !lanzados[a.id+hoyISO()]) || (pospuestos[a.id] && pospuestos[a.id]<=ms)));
+    if(!a) return;
+    lanzados[a.id+hoyISO()]=true; delete pospuestos[a.id]; avisoActual=a;
+    $('#al-t').textContent=a.hora+' · '+a.que; $('#al-n').textContent=a.nota||''; $('#alarm').hidden=false; pitido(); $('#al-ok').focus();
+  }
+  $('#al-ok').addEventListener('click', ()=>{ if(avisoActual){ hechosHoy()[avisoActual.id]=true; guardar(); } avisoActual=null; $('#alarm').hidden=true; todo(); aviso('Marcado como hecho'); });
+  $('#al-later').addEventListener('click', ()=>{ if(avisoActual){ pospuestos[avisoActual.id]=Date.now()+10*60*1000; } avisoActual=null; $('#alarm').hidden=true; aviso('Se lo recordaremos en 10 minutos'); });
+  setInterval(()=>{ revisar(); renderHoy(); }, 30000);
+
+  /* ---------- Inicio ---------- */
+  aplicarEscala(); todo(); pintarEj();
+  ir((location.hash||'#hoy').slice(1));
+  revisar();
+})();
+</script>
+</body></html>
