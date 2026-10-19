@@ -99,6 +99,10 @@ main section{display:flex;flex-direction:column;gap:16px;padding-top:20px}
 .when span{font-size:.75rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
 .item .grow b{display:block}
 .item.done{background:var(--ok-soft);border-color:var(--ok)}
+.pend{flex-direction:column;align-items:stretch}
+.pend.late{background:var(--warn-soft);border-color:var(--warn)}
+.chip{display:inline-block;align-self:flex-start;font-size:.8rem;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.late .chip{background:var(--warn);color:var(--bg)}
 
 .check{display:flex;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;min-height:60px}
 .check input{width:28px;height:28px;accent-color:var(--ok);flex:none}
@@ -110,6 +114,11 @@ main section{display:flex;flex-direction:column;gap:16px;padding-top:20px}
 form.add{display:grid;gap:10px}
 form.add .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 label.f{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.9rem;min-width:0}
+textarea{min-height:96px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);width:100%;resize:vertical;line-height:1.4}
+.cita{flex-wrap:wrap}
+.acciones{display:flex;gap:8px;width:100%}
+.acciones .btn{flex:1}
+.nota{margin-top:6px;padding:8px 10px;border-radius:10px;background:var(--accent-soft);white-space:pre-wrap;font-size:.95rem}
 input[type=text],input[type=tel],input[type=date],input[type=time],select{min-height:52px;border:1px solid var(--line);border-radius:10px;padding:0 12px;background:var(--bg);width:100%}
 details.adder summary{cursor:pointer;list-style:none}
 details.adder summary::-webkit-details-marker{display:none}
@@ -128,7 +137,37 @@ details.adder summary::-webkit-details-marker{display:none}
 
 nav.bar{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
   padding:6px max(8px, env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px, env(safe-area-inset-left,0px))}
-nav.bar .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+nav.bar .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:2px}
+.picker{position:fixed;inset:0;z-index:20;background:var(--bg);overflow:auto;padding:max(28px, env(safe-area-inset-top,0px)) max(16px, env(safe-area-inset-right,0px)) 28px max(16px, env(safe-area-inset-left,0px))}
+.picker .in{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center}
+.perfiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;width:100%}
+.perfiles button{border:1px solid transparent;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border-radius:16px}
+.perfiles button:hover{border-color:var(--line);background:var(--surface)}
+.av{width:84px;height:84px;border-radius:20px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-size:2rem;font-weight:700;flex:none}
+.av.sm{width:34px;height:34px;border-radius:10px;font-size:1rem}
+.av.md{width:52px;height:52px;border-radius:14px;font-size:1.4rem}
+.por{display:block;font-size:.8rem;color:var(--ink-soft);font-weight:400}
+.permisos{display:flex;flex-wrap:wrap;gap:8px}
+.permisos label{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;font-size:.85rem;cursor:pointer;background:var(--bg)}
+.permisos input{width:20px;height:20px;accent-color:var(--accent)}
+.carpeta{display:flex;align-items:center;gap:14px;width:100%;text-align:left;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;min-height:72px}
+.carpeta svg{flex:none;width:36px;height:36px;color:var(--accent)}
+.carpeta b{display:block;font-family:var(--font-display);font-size:1.1rem}
+.fotos{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.foto{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:6px;cursor:pointer;text-align:left;min-width:0}
+.foto img,.foto .ph{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;background:var(--line);display:block}
+.foto span{font-size:.8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.foto .desc{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;color:var(--ink)}
+.subir{position:relative;overflow:hidden}
+.subir input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.visor{position:fixed;inset:0;z-index:15;background:rgb(10,16,22);overflow:auto;padding:max(16px, env(safe-area-inset-top,0px)) max(16px, env(safe-area-inset-right,0px)) max(16px, env(safe-area-inset-bottom,0px)) max(16px, env(safe-area-inset-left,0px))}
+.visor .in{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.visor img{max-width:100%;max-height:72vh;object-fit:contain;border-radius:8px;align-self:center;background:#fff}
+.visor .card{gap:8px}
+.perfil-fila{display:flex;flex-direction:column;gap:2px;padding-block:8px;border-bottom:1px solid var(--line)}
+.perfil-fila:last-child{border-bottom:0}
+.perfil-fila .v{white-space:pre-wrap}
+.perfil-fila .v.vacio{color:var(--ink-soft);font-style:italic}
 nav.bar button{min-height:64px;border:0;background:transparent;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--ink-soft);font-size:.72rem;font-weight:700}
 nav.bar button svg{width:28px;height:28px}
 nav.bar button[aria-current="page"]{background:var(--accent-soft);color:var(--accent)}
@@ -140,6 +179,7 @@ nav.bar button[aria-current="page"]{background:var(--accent-soft);color:var(--ac
 .confirm{display:flex;gap:8px;flex-wrap:wrap}
 footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+@media (max-width:430px){.brand small{display:none}}
 @media (max-width:380px){.quick{grid-template-columns:1fr}.ex-actions{grid-template-columns:1fr}form.add .two{grid-template-columns:1fr}}
 </style>
 
@@ -150,6 +190,7 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
       <div><b>HelpIctus</b><small>Juntos en tu camino a la recuperación</small></div>
     </div>
     <div class="tools">
+      <button class="tool" id="t-yo" type="button" aria-label="Cambiar de perfil" style="padding:0 6px"></button>
       <button class="tool" id="t-size" type="button" aria-label="Cambiar tamaño de letra">A<span style="font-size:1.25em">A</span></button>
       <button class="tool" id="t-read" type="button" aria-label="Leer esta pantalla en voz alta">
         <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>
@@ -162,7 +203,7 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
   <main>
     <!-- HOY -->
     <section id="s-hoy" aria-labelledby="h-hoy">
-      <div><h2 id="h-hoy">Hola, Carmen</h2><p class="intro" id="hoy-fecha"></p></div>
+      <div><h2 id="h-hoy">Hola, Rosamari</h2><p class="intro" id="hoy-fecha"></p></div>
 
       <div class="card hi" id="hoy-proximo"></div>
 
@@ -174,16 +215,26 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
       </div>
 
       <div class="card">
-        <div class="row"><div class="grow"><h3>Mi día</h3><p class="muted" id="dia-resumen"></p></div></div>
+        <div class="row"><div class="grow"><h3>Mi día</h3><p class="muted" id="dia-resumen"></p></div><button class="btn ghost small" type="button" id="t-editar">Editar mi día</button></div>
         <div class="progress" aria-hidden="true"><i id="dia-bar"></i></div>
         <p class="muted" style="font-size:.9rem">No pasa nada si hoy no se completa todo. Cada pequeño paso cuenta.</p>
       </div>
       <div id="checklist" class="list"></div>
+      <details class="adder card" id="d-tarea">
+        <summary class="btn ghost full">Añadir una tarea al día</summary>
+        <form class="add" id="f-tarea">
+          <label class="f" for="t-texto">Qué hay que hacer<input id="t-texto" type="text" placeholder="Ej.: Cambiarla de postura después de comer" required></label>
+          <label class="f" for="t-grupo">En qué apartado<select id="t-grupo"></select></label>
+          <button class="btn" type="submit" id="t-guardar">Guardar tarea</button>
+          <button class="btn ghost" type="button" id="t-cancelar" hidden>Cancelar</button>
+        </form>
+      </details>
     </section>
 
     <!-- AGENDA -->
     <section id="s-agenda" aria-labelledby="h-agenda" hidden>
-      <div><h2 id="h-agenda">Citas</h2><p class="intro">Médicos, rehabilitación y otras citas.</p></div>
+      <div><h2 id="h-agenda">Citas</h2><p class="intro">Médicos, rehabilitación y otras citas de Rosamari.</p></div>
+      <h3>Citas con fecha</h3>
       <ul class="list" id="citas"></ul>
       <details class="adder card">
         <summary class="btn ghost full">Añadir una cita</summary>
@@ -194,8 +245,34 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
             <label class="f" for="c-hora">Hora<input id="c-hora" type="time" required></label>
           </div>
           <label class="f" for="c-donde">Dónde<input id="c-donde" type="text" placeholder="Ej.: Centro de salud"></label>
-          <button class="btn" type="submit">Guardar cita</button>
+          <label class="f" for="c-nota">Notas (opcional)<textarea id="c-nota" rows="3" placeholder="Ej.: Llevar el informe del alta, la tarjeta sanitaria y la lista de medicación"></textarea></label>
+          <button class="btn" type="submit" id="c-guardar">Guardar cita</button>
+          <button class="btn ghost" type="button" id="c-cancelar" hidden>Cancelar</button>
         </form>
+      </details>
+
+      <div style="padding-top:12px"><h3>Pendientes de que me llamen</h3><p class="intro">Llamadas que estamos esperando: una cita, unos resultados, una gestión o una compra. Si pasa el plazo y no han llamado, le toca llamar a usted.</p></div>
+      <ul class="list" id="pendientes"></ul>
+      <details class="adder card" id="d-pend">
+        <summary class="btn ghost full">Añadir una llamada pendiente</summary>
+        <form class="add" id="f-pend">
+          <label class="f" for="p-tipo">Qué esperamos
+            <select id="p-tipo"><option value="cita">Que nos den una cita</option><option value="resultados">Que nos den unos resultados</option><option value="gestion">Una gestión o un trámite</option><option value="compra">Una compra</option><option value="otro">Otra cosa</option></select>
+          </label>
+          <label class="f" for="p-que">Quién tiene que llamar o de qué se trata<input id="p-que" type="text" placeholder="Ej.: Dermatología, análisis, ayuda a la dependencia, silla de ruedas" required></label>
+          <div class="two">
+            <label class="f" for="p-ultima">Desde cuándo (opcional)<input id="p-ultima" type="date"></label>
+            <label class="f" for="p-limite">Si no llaman antes del…<input id="p-limite" type="date" required></label>
+          </div>
+          <label class="f" for="p-nota">Nota (opcional)<input id="p-nota" type="text" placeholder="Ej.: Nos dijeron que llamarían en dos semanas"></label>
+          <button class="btn" type="submit">Guardar pendiente de que nos avisen</button>
+        </form>
+      </details>
+
+      <details class="adder card" id="d-hist" style="margin-top:12px">
+        <summary class="btn ghost full">Ver historial</summary>
+        <p class="intro">Citas que ya pasaron y llamadas que ya llegaron, de la más reciente a la más antigua.</p>
+        <ul class="list" id="historial"></ul>
       </details>
     </section>
 
@@ -214,7 +291,8 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
             </label>
           </div>
           <label class="f" for="a-nota">Nota (opcional)<input id="a-nota" type="text" placeholder="Ej.: Con el desayuno"></label>
-          <button class="btn" type="submit">Guardar aviso</button>
+          <button class="btn" type="submit" id="a-guardar">Guardar aviso</button>
+          <button class="btn ghost" type="button" id="a-cancelar" hidden>Cancelar</button>
         </form>
       </details>
       <p class="muted" style="font-size:.85rem">En este prototipo el aviso suena solo con la página abierta. En la versión final se podrán activar notificaciones en el móvil.</p>
@@ -235,7 +313,9 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
           <label class="f" for="k-nombre">Nombre<input id="k-nombre" type="text" required></label>
           <label class="f" for="k-rol">Quién es<input id="k-rol" type="text" placeholder="Ej.: Hija, médico de cabecera"></label>
           <label class="f" for="k-tel">Teléfono<input id="k-tel" type="tel" inputmode="tel" required></label>
-          <button class="btn" type="submit">Guardar contacto</button>
+          <label class="f" for="k-grupo">Grupo<select id="k-grupo"><option>Familia</option><option>Cuidadoras</option><option>Profesionales sanitarios</option><option>Servicios</option><option>Otros</option></select></label>
+          <button class="btn" type="submit" id="k-guardar">Guardar contacto</button>
+          <button class="btn ghost" type="button" id="k-cancelar" hidden>Cancelar</button>
         </form>
       </details>
     </section>
@@ -266,6 +346,68 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
       </div>
     </section>
 
+    <!-- DOCUMENTOS -->
+    <section id="s-documentos" aria-labelledby="h-documentos" hidden>
+      <div><h2 id="h-documentos">Documentos</h2><p class="intro">Informes, recetas y papeles, ordenados por apartados.</p></div>
+      <div class="demo" role="note"><span><strong>Prototipo.</strong> Las fotos se guardan solo en este navegador. Para la demo, usa documentos inventados o tapa los datos personales.</span></div>
+
+      <div id="docs-inicio" style="display:flex;flex-direction:column;gap:12px">
+        <div class="list" id="docs-apartados"></div>
+        <details class="adder card" id="d-apartado">
+          <summary class="btn ghost full">Crear un apartado</summary>
+          <form class="add" id="f-apartado">
+            <label class="f" for="ap-nombre">Nombre del apartado<input id="ap-nombre" type="text" placeholder="Ej.: Informes de neurología" required></label>
+            <button class="btn" type="submit">Crear apartado</button>
+          </form>
+        </details>
+      </div>
+
+      <div id="docs-carpeta" hidden style="display:flex;flex-direction:column;gap:12px">
+        <button class="btn ghost small" type="button" id="docs-volver" style="align-self:flex-start">← Todos los apartados</button>
+        <div><h3 id="docs-titulo" style="font-size:1.35rem"></h3><p class="muted" id="docs-cuenta"></p></div>
+        <label class="btn full subir" for="docs-subir">Añadir fotos<input id="docs-subir" type="file" accept="image/*" multiple></label>
+        <div class="fotos" id="docs-fotos"></div>
+        <div class="card">
+          <form class="add" id="f-renombrar">
+            <label class="f" for="ap-renombre">Cambiar el nombre del apartado<input id="ap-renombre" type="text" required></label>
+            <div class="acciones"><button class="btn small" type="submit">Guardar nombre</button><button class="btn ghost small" type="button" id="ap-borrar">Borrar apartado</button></div>
+          </form>
+          <div id="ap-borrar-box"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERFIL -->
+    <section id="s-perfil" aria-labelledby="h-perfil" hidden>
+      <div><h2 id="h-perfil">Perfil</h2></div>
+
+      <h3>Mi perfil</h3>
+      <div class="card" id="mi-perfil"></div>
+
+      <div id="bloque-paciente" style="display:flex;flex-direction:column;gap:12px;padding-top:8px">
+        <div><h3 id="h-paciente">Perfil de Rosamari</h3><p class="intro">Lo importante de un vistazo, para quien la cuide.</p></div>
+        <div class="card" id="perfil-datos"></div>
+        <details class="adder card" id="d-perfil">
+          <summary class="btn ghost full">Modificar el perfil de la paciente</summary>
+          <form class="add" id="f-perfil"></form>
+        </details>
+      </div>
+
+      <div id="bloque-cuenta" style="display:flex;flex-direction:column;gap:12px;padding-top:8px">
+        <div><h3>Perfiles de la cuenta</h3><p class="intro">Cada persona entra con su perfil. Aquí se decide qué puede ver cada una.</p></div>
+        <ul class="list" id="usuarios"></ul>
+        <details class="adder card" id="d-usuario">
+          <summary class="btn ghost full">Añadir un perfil</summary>
+          <form class="add" id="f-usuario">
+            <label class="f" for="u-nombre">Nombre<input id="u-nombre" type="text" required></label>
+            <label class="f" for="u-rol">Quién es<input id="u-rol" type="text" placeholder="Ej.: Cuidadora de tarde"></label>
+            <fieldset class="f" style="border:0;padding:0;margin:0"><legend style="font-weight:700;font-size:.9rem;margin-bottom:6px">Qué puede ver</legend><div class="permisos" id="u-permisos"></div></fieldset>
+            <button class="btn" type="submit">Guardar perfil</button>
+          </form>
+        </details>
+      </div>
+    </section>
+
     <footer class="note">
       <p>HelpIctus · prototipo para enseñar la idea a profesionales y familias. Los datos se guardan solo en este navegador.</p>
       <div class="confirm" style="margin-top:10px" id="reset-box">
@@ -273,6 +415,33 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
       </div>
     </footer>
   </main>
+</div>
+
+<div class="picker" id="picker" hidden>
+  <div class="in">
+    <svg width="56" height="56" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="2"/><g fill="currentColor"><circle cx="13" cy="17" r="2"/><circle cx="20" cy="13" r="2"/><circle cx="27" cy="17" r="2"/><circle cx="16" cy="25" r="2"/><circle cx="24" cy="25" r="2"/></g><g stroke="currentColor" stroke-width="1.2" fill="none"><path d="M13 17L20 13L27 17L24 25L16 25Z"/><path d="M13 17L24 25M27 17L16 25M20 13L16 25"/></g></svg>
+    <h2 id="picker-t">¿Quién está con Rosamari?</h2>
+    <p class="intro">Elige tu perfil. Así se sabrá quién ha marcado cada cosa, y cada persona verá lo que le corresponde.</p>
+    <div class="perfiles" id="perfiles"></div>
+    <p class="muted" style="font-size:.8rem">Prototipo: en esta demo los perfiles se cambian en el mismo móvil. En la versión real, cada persona entraría desde su propio móvil.</p>
+  </div>
+</div>
+
+<div class="visor" id="visor" hidden role="dialog" aria-label="Ver documento">
+  <div class="in">
+    <div class="acciones"><button class="btn small" type="button" id="visor-cerrar">Cerrar</button></div>
+    <img id="visor-img" alt="">
+    <div class="card">
+      <form class="add" id="f-foto">
+        <p class="muted" id="foto-pista" style="font-size:.9rem" hidden>Ponle un nombre y, si quieres, una descripción para saber qué es.</p>
+        <label class="f" for="foto-nombre">Nombre<input id="foto-nombre" type="text" placeholder="Ej.: Informe de neurología" required></label>
+        <label class="f" for="foto-desc">Descripción (opcional)<textarea id="foto-desc" rows="3" placeholder="Ej.: Revisión del 10 de noviembre. Llevar una copia a la enfermera."></textarea></label>
+        <p class="muted" id="foto-info" style="font-size:.85rem"></p>
+        <div class="acciones"><button class="btn small" type="submit">Guardar</button><button class="btn ghost small" type="button" id="foto-borrar">Borrar foto</button></div>
+      </form>
+      <div id="foto-borrar-box"></div>
+    </div>
+  </div>
 </div>
 
 <div class="alarm" id="alarm" hidden>
@@ -295,6 +464,8 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
     <button type="button" data-go="avisos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Avisos</button>
     <button type="button" data-go="contactos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Llamar</button>
     <button type="button" data-go="practicar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Practicar</button>
+    <button type="button" data-go="documentos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Docs</button>
+    <button type="button" data-go="perfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Perfil</button>
   </div>
 </nav>
 
@@ -309,6 +480,7 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
   const ahoraHM = () => { const d=new Date(); return pad(d.getHours())+':'+pad(d.getMinutes()); };
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const fmtDia = iso => { const [y,m,d]=iso.split('-').map(Number); return new Date(y,m-1,d).toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'}); };
+  const fmtDiaA = iso => { const [y,m,d]=iso.split('-').map(Number); return new Date(y,m-1,d).toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'}); };
   const corto = iso => { const [y,m,d]=iso.split('-').map(Number); const f=new Date(y,m-1,d); return {dia:f.getDate(), mes:f.toLocaleDateString('es-ES',{month:'short'}).replace('.','')}; };
   const uid = () => Math.random().toString(36).slice(2,9);
 
@@ -316,27 +488,53 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
   function ejemplo(){
     return {
       citas:[
-        {id:uid(), que:'Logopeda', fecha:masDias(1), hora:'10:30', donde:'Centro de rehabilitación'},
-        {id:uid(), que:'Revisión con neurología', fecha:masDias(6), hora:'09:15', donde:'Hospital, consultas externas'},
-        {id:uid(), que:'Enfermera del centro de salud', fecha:masDias(12), hora:'12:00', donde:'Centro de salud'}
+        {id:uid(), que:'Neurología', fecha:'2026-11-10', hora:'11:00', donde:'Puerto Real'},
+        {id:uid(), que:'Dermatología', fecha:'2025-11-15', hora:'', donde:''}
+      ],
+      historial:[],
+      pendientes:[
+        {id:uid(), tipo:'cita', que:'Dermatología', ultima:'2025-11-15', limite:'2026-11-15', nota:'Pendiente de que llamen para darle cita: hace casi un año de la última.'}
       ],
       avisos:[
-        {id:uid(), que:'Medicación de la mañana', hora:'09:00', tipo:'med', nota:'Según la pauta de su médico'},
-        {id:uid(), que:'Medicación de la noche', hora:'21:00', tipo:'med', nota:'Según la pauta de su médico'},
-        {id:uid(), que:'Paseo corto con Antonio', hora:'18:00', tipo:'otro', nota:''}
+        {id:uid(), que:'Citalopram y digoxina', hora:'09:00', tipo:'med', nota:'Según la pauta de su médico'},
+        {id:uid(), que:'Furosemida', hora:'14:00', tipo:'med', nota:'Según la pauta de su médico'},
+        {id:uid(), que:'Sintrom', hora:'18:00', tipo:'med', nota:'Según la pauta de su médico'},
+        {id:uid(), que:'Emconcor, medio lorazepam y atorvastatina', hora:'21:00', tipo:'med', nota:'Según la pauta de su médico'}
       ],
       contactos:[
-        {id:uid(), nombre:'Antonio', rol:'Hijo · cuidador principal', tel:'600 000 001'},
-        {id:uid(), nombre:'Centro de salud', rol:'Cita previa', tel:'955 000 002'},
-        {id:uid(), nombre:'Lucía', rol:'Logopeda', tel:'600 000 003'}
+        {id:uid(), grupo:'Familia', nombre:'Maleni', rol:'Hermana · cuidadora', tel:'600 000 101'},
+        {id:uid(), grupo:'Familia', nombre:'Encarni', rol:'Hermana · cuidadora', tel:'600 000 102'},
+        {id:uid(), grupo:'Familia', nombre:'Isidoro', rol:'Hermano · cuidador', tel:'600 000 103'},
+        {id:uid(), grupo:'Familia', nombre:'Lorenzo', rol:'Hermano · cuidador', tel:'600 000 104'},
+        {id:uid(), grupo:'Familia', nombre:'Juan José', rol:'Hermano · cuidador', tel:'600 000 105'},
+        {id:uid(), grupo:'Cuidadoras', nombre:'Chechu', rol:'Cuidadora de mañana', tel:'600 000 201'},
+        {id:uid(), grupo:'Cuidadoras', nombre:'Lorena', rol:'Cuidadora de tarde', tel:'600 000 202'},
+        {id:uid(), grupo:'Cuidadoras', nombre:'Estefanía', rol:'Cuidadora del paseo de la tarde', tel:'600 000 203'},
+        {id:uid(), grupo:'Cuidadoras', nombre:'Diana', rol:'Cuidadora de fin de semana', tel:'600 000 204'},
+        {id:uid(), grupo:'Cuidadoras', nombre:'Mónica', rol:'Cuidadora del ayuntamiento (abuela)', tel:'600 000 205'},
+        {id:uid(), grupo:'Profesionales sanitarios', nombre:'Lidia', rol:'Logopeda', tel:'600 000 301'},
+        {id:uid(), grupo:'Profesionales sanitarios', nombre:'Elena', rol:'Enfermera · láser', tel:'600 000 302'},
+        {id:uid(), grupo:'Profesionales sanitarios', nombre:'Neuróloga', rol:'Bótox · Puerto Real', tel:'956 000 303'},
+        {id:uid(), grupo:'Servicios', nombre:'Centro de salud', rol:'Rota', tel:'956 000 401'},
+        {id:uid(), grupo:'Servicios', nombre:'Empresa de ayuda a domicilio', rol:'', tel:'956 000 402'},
+        {id:uid(), grupo:'Servicios', nombre:'Centro de Alzheimer', rol:'', tel:'956 000 403'}
       ],
       hechos:{}, // { 'AAAA-MM-DD': { idAviso:true, 'chk-..':true } }
       escala:1
     };
   }
-  const CLAVE='helpictus-demo-v1';
+  const CLAVE='helpictus-demo-v13';
   let st;
   try { st = JSON.parse(localStorage.getItem(CLAVE)) || ejemplo(); } catch(e){ st = ejemplo(); }
+  st.pendientes ||= []; st.historial ||= [];
+  const diasEntre = (a,b) => { const p=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}; return Math.round((p(b)-p(a))/86400000); };
+  function haceCuanto(iso){
+    const d=diasEntre(iso, hoyISO());
+    if(d<45) return 'hace '+d+' días';
+    const m=Math.round(d/30.4);
+    if(m<12) return 'hace '+m+' meses';
+    return m<15 ? 'hace un año' : 'hace más de un año';
+  }
   function guardar(){ try{ localStorage.setItem(CLAVE, JSON.stringify(st)); }catch(e){} }
   const hechosHoy = () => (st.hechos[hoyISO()] ||= {});
 
@@ -344,14 +542,124 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
   const CHECK = [
     {g:'Cuidado personal', items:['Aseo o ducha','Cepillarse los dientes','Vestirse (con la ayuda justa)']},
     {g:'Comida y bebida', items:['Desayuno','Comida','Merienda','Cena','Beber agua a lo largo del día (según indicación médica)']},
-    {g:'Medicación y terapia', items:['Medicación del día, según la pauta','Ejercicios que indicó el equipo de rehabilitación']},
+    {g:'Terapia', items:['Ejercicios que indicó el equipo de rehabilitación']},
     {g:'Ánimo y descanso', items:['Una conversación tranquila','Salir o dar un paseo, si es posible','Descansar bien']}
   ];
 
+  /* ---------- Tareas del día (editables) ---------- */
+  const GRUPOS=['Cuidado personal','Comida y bebida','Terapia','Ánimo y descanso','Otras tareas'];
+  function sembrarTareas(){ st.tareas=[]; st.historial ||= []; CHECK.forEach(g => g.items.forEach(t => st.tareas.push({id:uid(), grupo:g.g, texto:t}))); }
+  if(!st.tareas) sembrarTareas();
+  let modoEditarDia=false, editandoTarea=null;
+  function editarTarea(t){
+    editandoTarea=t.id; const d=$('#d-tarea'); d.open=true;
+    $('#t-texto').value=t.texto; $('#t-grupo').value=t.grupo;
+    $('#t-guardar').textContent='Guardar cambios'; $('#t-cancelar').hidden=false;
+    d.scrollIntoView({block:'center'}); $('#t-texto').focus({preventScroll:true});
+  }
+  function terminarTarea(){ editandoTarea=null; $('#f-tarea').reset(); $('#t-guardar').textContent='Guardar tarea'; $('#t-cancelar').hidden=true; $('#d-tarea').open=false; }
+
   /* ---------- Navegación ---------- */
-  const SECC=['hoy','agenda','avisos','contactos','practicar'];
+  const SECC=['hoy','agenda','avisos','contactos','practicar','documentos','perfil'];
+
+  /* ---------- Perfil ---------- */
+  const CAMPOS=[
+    {k:'nombre', l:'Nombre', ph:'Ej.: Rosamari'},
+    {k:'nacimiento', l:'Fecha de nacimiento', ph:'Ej.: 3 de marzo de 1950'},
+    {k:'ictus', l:'Ictus', ph:'Ej.: Ictus en 2023, lado derecho afectado', largo:true},
+    {k:'dependencia', l:'Grado de dependencia', ph:'Ej.: 96 %'},
+    {k:'otras', l:'Otras enfermedades', ph:'Ej.: Hipertensión', largo:true},
+    {k:'alergias', l:'Alergias', ph:'Ej.: Ninguna conocida'},
+    {k:'comunicacion', l:'Cómo comunicarse con ella', ph:'Ej.: Entiende mejor frases cortas; responde con gestos', largo:true},
+    {k:'movilidad', l:'Movilidad y ayudas', ph:'Ej.: Silla de ruedas; necesita ayuda para levantarse', largo:true},
+    {k:'centro', l:'Centro de salud', ph:'Ej.: Centro de salud de Rota'},
+    {k:'notas', l:'Otras cosas importantes', ph:'Ej.: Le gusta escuchar la radio por la mañana', largo:true}
+  ];
+  function renderPerfil(){
+    const p=st.perfil||{};
+    $('#perfil-datos').innerHTML=CAMPOS.map(c => '<div class="perfil-fila"><span class="label">'+esc(c.l)+'</span><span class="v'+(p[c.k]?'':' vacio')+'">'+(p[c.k]?esc(p[c.k]):'Sin rellenar')+'</span></div>').join('');
+    $('#h-hoy').textContent='Hola, '+(p.nombre||'Rosamari');
+    $('#h-paciente').textContent='Perfil de '+(p.nombre||'Rosamari');
+    $('#picker-t').textContent='¿Quién está con '+(p.nombre||'Rosamari')+'?';
+    $('#bloque-paciente').hidden=!puede('paciente');
+    renderMiPerfil(); renderUsuarios();
+  }
+
+  /* ---------- Perfiles de la cuenta (tipo Netflix) ---------- */
+  const PERMISOS=[{k:'agenda',l:'Citas'},{k:'avisos',l:'Avisos y medicación'},{k:'contactos',l:'Contactos'},{k:'cuidadoras',l:'Contactos de otras cuidadoras'},{k:'practicar',l:'Practicar'},{k:'documentos',l:'Documentos'},{k:'paciente',l:'Perfil de la paciente'}];
+  const COLORES=['#1f5f8b','#2c7a4b','#8a4fa3','#b3541e','#4d6b2f','#a3355a','#5b6b7a'];
+  const todos=()=>({agenda:true,avisos:true,contactos:true,cuidadoras:true,practicar:true,documentos:true,paciente:true});
+  function usuariosEjemplo(){
+    return [
+      {id:'u1', nombre:'Maleni', rol:'Hermana · gestiona la cuenta', admin:true, color:COLORES[0], permisos:todos()},
+      {id:'u6', nombre:'Encarni', rol:'Hermana · cuidadora', color:COLORES[5], permisos:todos()},
+      {id:'u7', nombre:'Isidoro', rol:'Hermano · cuidador', color:COLORES[6], permisos:todos()},
+      {id:'u8', nombre:'Lorenzo', rol:'Hermano · cuidador', color:'#7a5c1f', permisos:todos()},
+      {id:'u9', nombre:'Juan José', rol:'Hermano · cuidador', color:'#2f6f73', permisos:todos()},
+      {id:'u2', nombre:'Chechu', rol:'Cuidadora de mañana', color:COLORES[1], permisos:{agenda:true,avisos:true,contactos:true,practicar:true,paciente:true}},
+      {id:'u3', nombre:'Lorena', rol:'Cuidadora de tarde', color:COLORES[2], permisos:{agenda:true,avisos:true,contactos:true,practicar:true,paciente:true}},
+      {id:'u4', nombre:'Diana', rol:'Cuidadora de fin de semana', color:COLORES[3], permisos:{agenda:false,avisos:true,contactos:true,practicar:false,paciente:true}}
+    ];
+  }
+  st.usuarios ||= usuariosEjemplo();
+  let yoId=null;
+  const yo=()=>st.usuarios.find(u=>u.id===yoId);
+  function puede(k){ const u=yo(); return !!(u && (u.admin || (u.permisos && u.permisos[k]))); }
+  function avatar(u, tam){ return '<span class="av'+(tam?' '+tam:'')+'" style="background:'+esc(u.color||COLORES[6])+'" aria-hidden="true">'+esc((u.nombre||'?').trim().charAt(0).toUpperCase())+'</span>'; }
+  function marcar(id, si){ const h=hechosHoy(); if(si) h[id]={por:yoId, hora:ahoraHM()}; else delete h[id]; guardar(); }
+  function quien(id){
+    const v=hechosHoy()[id]; if(!v) return '';
+    if(v===true) return 'Hecho';
+    const u=st.usuarios.find(x=>x.id===v.por);
+    return 'Hecho por '+(u?u.nombre:'alguien')+' a las '+v.hora;
+  }
+  function abrirPicker(){
+    $('#perfiles').innerHTML = st.usuarios.map(u=>'<button type="button" data-yo="'+esc(u.id)+'">'+avatar(u)+'<b>'+esc(u.nombre)+'</b><span class="por">'+esc(u.rol||'')+'</span></button>').join('');
+    $('#picker').hidden=false;
+  }
+  function aplicarPermisos(){
+    document.querySelectorAll('[data-go]').forEach(b => { const s=b.dataset.go; if(['agenda','avisos','contactos','practicar','documentos'].includes(s)) b.hidden=!puede(s); });
+    const n=document.querySelectorAll('nav.bar button:not([hidden])').length;
+    $('nav.bar .in').style.gridTemplateColumns='repeat('+n+',1fr)';
+    const u=yo(); $('#t-yo').innerHTML = u ? avatar(u,'sm') : '';
+  }
+  function renderMiPerfil(){
+    const u=yo(); if(!u){ $('#mi-perfil').innerHTML=''; return; }
+    const ve = u.admin ? 'Todo, y además gestiona los perfiles de la cuenta' : (PERMISOS.filter(p=>u.permisos[p.k]).map(p=>p.l).join(', ') || 'Solo el inicio');
+    $('#mi-perfil').innerHTML='<div class="row">'+avatar(u,'md')+'<div class="grow"><p class="big">'+esc(u.nombre)+'</p><p class="muted">'+esc(u.rol||'')+'</p></div></div>'+
+      '<p><span class="label" style="display:block">Puede ver</span>'+esc(ve)+'</p>'+
+      '<button class="btn ghost full" type="button" data-cambiar>Cambiar de perfil</button>';
+  }
+  function renderUsuarios(){
+    const u=yo(); $('#bloque-cuenta').hidden=!(u && u.admin);
+    if(!(u && u.admin)) return;
+    const ul=$('#usuarios'); ul.innerHTML='';
+    st.usuarios.forEach(x => {
+      const li=document.createElement('li'); li.className='card';
+      li.innerHTML='<div class="row">'+avatar(x,'md')+'<div class="grow"><b class="big" style="display:block">'+esc(x.nombre)+'</b><span class="muted">'+esc(x.rol||'')+'</span></div></div>'+
+        (x.admin ? '<p class="muted">Ve todo y gestiona la cuenta.</p>' :
+          '<div class="permisos">'+PERMISOS.map(p=>'<label><input type="checkbox" data-perm="'+p.k+'" '+(x.permisos[p.k]?'checked':'')+'>'+esc(p.l)+'</label>').join('')+'</div>'+
+          '<div class="acciones"><button class="btn ghost small" type="button" data-del>Borrar perfil</button></div>');
+      li.querySelectorAll('[data-perm]').forEach(cb => cb.addEventListener('change', () => { x.permisos[cb.dataset.perm]=cb.checked; guardar(); aviso('Permisos de '+x.nombre+' guardados'); }));
+      const del=li.querySelector('[data-del]');
+      if(del) del.addEventListener('click', () => pedirConfirmacion(li, '¿Borrar el perfil de '+x.nombre+'?', () => { st.usuarios=st.usuarios.filter(y=>y.id!==x.id); guardar(); todo(); aviso('Perfil borrado'); }));
+      ul.appendChild(li);
+    });
+    $('#u-permisos').innerHTML = PERMISOS.map(p=>'<label><input type="checkbox" id="up-'+p.k+'" checked>'+esc(p.l)+'</label>').join('');
+  }
+  document.addEventListener('click', e => {
+    const b=e.target.closest('[data-yo]');
+    if(b){ yoId=b.dataset.yo; $('#picker').hidden=true; aplicarPermisos(); todo(); ir('hoy'); aviso('Hola, '+yo().nombre); return; }
+    if(e.target.closest('[data-cambiar]') || e.target.closest('#t-yo')) abrirPicker();
+  });
+  function pintarFormPerfil(){
+    const p=st.perfil||{};
+    $('#f-perfil').innerHTML=CAMPOS.map(c => '<label class="f" for="pf-'+c.k+'">'+esc(c.l)+(c.largo?'<textarea id="pf-'+c.k+'" rows="2" placeholder="'+esc(c.ph)+'">'+esc(p[c.k]||'')+'</textarea>':'<input id="pf-'+c.k+'" type="text" placeholder="'+esc(c.ph)+'" value="'+esc(p[c.k]||'')+'">')+'</label>').join('')+
+      '<button class="btn" type="submit">Guardar perfil</button>';
+  }
   function ir(n, foco){
     if(!SECC.includes(n)) n='hoy';
+    if(['agenda','avisos','contactos','practicar','documentos'].includes(n) && !puede(n)) n='hoy';
     SECC.forEach(s => { $('#s-'+s).hidden = s!==n; });
     document.querySelectorAll('nav.bar button').forEach(b => { if(b.dataset.go===n) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
     try{ history.replaceState(null,'','#'+n); }catch(e){}
@@ -371,29 +679,70 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
     const pend = avisosOrdenados().filter(a => !h[a.id]);
     const sig = pend.find(a => a.hora >= ahora) || pend[0];
     const cita = citasOrdenadas()[0];
-    let html = '<p class="label">Lo próximo</p>';
-    if(sig){ html += '<p class="big">'+esc(sig.hora)+' · '+esc(sig.que)+'</p>'; }
-    else { html += '<p class="big">Todos los avisos de hoy están hechos</p>'; }
-    if(cita){ html += '<p>Próxima cita: <b>'+esc(cita.que)+'</b>, '+esc(fmtDia(cita.fecha))+' a las '+esc(cita.hora)+'.</p>'; }
+    let html = '<p class="label">Diario y recordatorio</p>';
+    const verAv=puede('avisos'), verCi=puede('agenda');
+    if(verAv){
+      if(sig){ html += '<p class="big">'+esc(sig.hora)+' · '+esc(sig.que)+'</p>'; }
+      else { html += '<p class="big">Todos los avisos de hoy están hechos</p>'; }
+    }
+    if(!verAv && !verCi){ html += '<p>Hoy puedes ayudar con las tareas de «Mi día».</p>'; }
+    if(verCi && cita){ html += '<p>Próxima cita: <b>'+esc(cita.que)+'</b>, '+esc(fmtDia(cita.fecha))+' a las '+esc(cita.hora)+(cita.donde?', en '+esc(cita.donde):'')+'.</p>'; }
+    const tarde = st.pendientes.filter(p => p.limite <= hoyISO());
+    if(verCi && st.pendientes.length){
+      html += tarde.length
+        ? '<p><b>Conviene llamar:</b> '+esc(tarde.map(p=>p.que).join(', '))+' (ya pasó el plazo).</p>'
+        : '<p>Pendiente de que llamen: <b>'+esc(st.pendientes.map(p=>p.que).join(', '))+'</b>.</p>';
+    }
     $('#hoy-proximo').innerHTML = html;
     $('#q-avisos').textContent = pend.length ? pend.length+' pendientes hoy' : 'Todo hecho hoy';
-    $('#q-citas').textContent = cita ? 'Próxima: '+corto(cita.fecha).dia+' '+corto(cita.fecha).mes : 'Sin citas próximas';
+    $('#q-citas').textContent = (cita ? 'Próxima: '+corto(cita.fecha).dia+' '+corto(cita.fecha).mes : 'Sin citas próximas') + (st.pendientes.length ? ' · '+st.pendientes.length+' por llamar' : '');
 
     const cont = $('#checklist'); cont.innerHTML='';
     let total=0, hechos=0;
-    CHECK.forEach((grp,gi) => {
-      const box = document.createElement('div'); box.className='group';
-      box.innerHTML = '<h3>'+esc(grp.g)+'</h3>';
-      const ul = document.createElement('div'); ul.className='list';
-      grp.items.forEach((t,ii) => {
-        const k='chk-'+gi+'-'+ii; total++; if(h[k]) hechos++;
-        const lab=document.createElement('label'); lab.className='check'+(h[k]?' on':''); lab.htmlFor=k;
-        lab.innerHTML='<input type="checkbox" id="'+k+'" '+(h[k]?'checked':'')+'><span>'+esc(t)+'</span>';
-        lab.querySelector('input').addEventListener('change', ev => { hechosHoy()[k]=ev.target.checked; guardar(); renderHoy(); });
+    if(verAv && st.avisos.length){
+      const box=document.createElement('div'); box.className='group';
+      box.innerHTML='<h3>Avisos de hoy</h3>';
+      const ul=document.createElement('div'); ul.className='list';
+      avisosOrdenados().forEach(a => {
+        const k='hoy-av-'+a.id; total++; if(h[a.id]) hechos++;
+        const lab=document.createElement('label'); lab.className='check'+(h[a.id]?' on':''); lab.htmlFor=k;
+        lab.innerHTML='<input type="checkbox" id="'+k+'" '+(h[a.id]?'checked':'')+'><span><b>'+esc(a.hora)+'</b> · '+esc(a.que)+(h[a.id]?'<span class="por">'+esc(quien(a.id))+'</span>':'')+'</span>';
+        lab.querySelector('input').addEventListener('change', ev => { marcar(a.id, ev.target.checked); todo(); });
         ul.appendChild(lab);
       });
       box.appendChild(ul); cont.appendChild(box);
+    }
+    if(modoEditarDia && st.avisos.length){
+      const n=document.createElement('p'); n.className='muted'; n.style.fontSize='.9rem';
+      n.innerHTML='Los avisos de medicación se cambian en la sección <button class="btn ghost small" type="button" data-go="avisos">Avisos</button>';
+      cont.appendChild(n);
+    }
+    const grupos=[...GRUPOS, ...st.tareas.map(t=>t.grupo).filter(g=>!GRUPOS.includes(g))].filter((g,i,a)=>a.indexOf(g)===i);
+    grupos.forEach(g => {
+      const ts=st.tareas.filter(t=>t.grupo===g); if(!ts.length) return;
+      const box=document.createElement('div'); box.className='group';
+      box.innerHTML='<h3>'+esc(g)+'</h3>';
+      const ul=document.createElement('div'); ul.className='list';
+      ts.forEach(t => {
+        total++; if(h[t.id]) hechos++;
+        if(modoEditarDia){
+          const row=document.createElement('div'); row.className='item cita';
+          row.innerHTML='<div class="grow">'+esc(t.texto)+'</div><div class="acciones"><button class="btn small" type="button" data-edit>Modificar</button><button class="btn ghost small" type="button" data-del>Borrar</button></div>';
+          row.querySelector('[data-edit]').addEventListener('click', () => editarTarea(t));
+          row.querySelector('[data-del]').addEventListener('click', () => pedirConfirmacion(row, '¿Quitar esta tarea del día?', () => { st.tareas=st.tareas.filter(x=>x.id!==t.id); guardar(); renderHoy(); aviso('Tarea quitada'); }));
+          ul.appendChild(row);
+        } else {
+          const k='chk-'+t.id;
+          const lab=document.createElement('label'); lab.className='check'+(h[t.id]?' on':''); lab.htmlFor=k;
+          lab.innerHTML='<input type="checkbox" id="'+k+'" '+(h[t.id]?'checked':'')+'><span>'+esc(t.texto)+(h[t.id]?'<span class="por">'+esc(quien(t.id))+'</span>':'')+'</span>';
+          lab.querySelector('input').addEventListener('change', ev => { marcar(t.id, ev.target.checked); renderHoy(); });
+          ul.appendChild(lab);
+        }
+      });
+      box.appendChild(ul); cont.appendChild(box);
     });
+    $('#t-editar').textContent = modoEditarDia ? 'Terminar' : 'Editar mi día';
+    const sel=$('#t-grupo'), actual=sel.value; sel.innerHTML=grupos.map(g=>'<option>'+esc(g)+'</option>').join(''); if(actual) sel.value=actual;
     $('#dia-resumen').textContent = hechos+' de '+total+' cosas hechas hoy';
     $('#dia-bar').style.width = (total? hechos/total*100 : 0)+'%';
   }
@@ -403,10 +752,61 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
     ul.innerHTML = cs.length ? '' : '<li class="card muted">No hay citas próximas. Puede añadir una abajo.</li>';
     cs.forEach(c => {
       const f=corto(c.fecha);
+      const li=document.createElement('li'); li.className='item cita';
+      li.innerHTML='<div class="when"><b>'+f.dia+'</b><span>'+esc(f.mes)+'</span></div><div class="grow"><b>'+esc(c.que)+'</b><span class="muted">'+esc(fmtDia(c.fecha))+' · '+esc(c.hora)+(c.donde?'<br>'+esc(c.donde):'')+'</span>'+(c.nota?'<div class="nota"><b style="display:block">Notas</b>'+esc(c.nota)+'</div>':'')+'</div>'+
+        '<div class="acciones"><button class="btn small" type="button" data-edit aria-label="Modificar cita '+esc(c.que)+'">Modificar</button><button class="btn ghost small" type="button" data-del aria-label="Borrar cita '+esc(c.que)+'">Borrar</button></div>';
+      li.querySelector('[data-edit]').addEventListener('click', () => editarCita(c));
+      li.querySelector('[data-del]').addEventListener('click', () => pedirConfirmacion(li, '¿Borrar esta cita?', () => { st.citas=st.citas.filter(x=>x.id!==c.id); guardar(); todo(); aviso('Cita borrada'); }));
+      ul.appendChild(li);
+    });
+  }
+
+  let convertir=null; // id de la pendiente que se está convirtiendo en cita
+  let editando=null;  // id de la cita que se está modificando
+  const TIPOS={cita:'Cita', resultados:'Resultados', gestion:'Gestión', compra:'Compra', otro:'Otra cosa'};
+  function renderHistorial(){
+    const ul=$('#historial'), hoy=hoyISO();
+    const items=[
+      ...st.citas.filter(c=>c.fecha<hoy).map(c=>({fecha:c.fecha, etiqueta:'Cita', titulo:c.que, detalle:[c.hora, c.donde, c.nota?'Notas: '+c.nota:''].filter(Boolean).join(' · ')})),
+      ...st.historial.map(h=>({fecha:h.fecha, etiqueta:h.etiqueta, titulo:h.titulo, detalle:h.detalle||''}))
+    ].sort((a,b)=>b.fecha.localeCompare(a.fecha));
+    ul.innerHTML = items.length ? '' : '<li class="muted">Todavía no hay nada en el historial.</li>';
+    items.forEach(it => {
+      const [y]=it.fecha.split('-'); const f=corto(it.fecha);
       const li=document.createElement('li'); li.className='item';
-      li.innerHTML='<div class="when"><b>'+f.dia+'</b><span>'+esc(f.mes)+'</span></div><div class="grow"><b>'+esc(c.que)+'</b><span class="muted">'+esc(fmtDia(c.fecha))+' · '+esc(c.hora)+(c.donde?'<br>'+esc(c.donde):'')+'</span></div>'+
-        '<button class="btn ghost small" type="button" aria-label="Borrar cita '+esc(c.que)+'">Borrar</button>';
-      li.querySelector('button').addEventListener('click', () => pedirConfirmacion(li, '¿Borrar esta cita?', () => { st.citas=st.citas.filter(x=>x.id!==c.id); guardar(); todo(); aviso('Cita borrada'); }));
+      li.innerHTML='<div class="when"><b>'+f.dia+'</b><span>'+esc(f.mes)+' '+y+'</span></div><div class="grow"><span class="chip">'+esc(it.etiqueta)+'</span><b style="margin-top:4px">'+esc(it.titulo)+'</b><span class="muted">'+esc(fmtDiaA(it.fecha))+(it.detalle?' · '+esc(it.detalle):'')+'</span></div>';
+      ul.appendChild(li);
+    });
+  }
+  function anotar(etiqueta, titulo, detalle){ st.historial.push({id:uid(), fecha:hoyISO(), etiqueta, titulo, detalle}); }
+  function editarCita(c){
+    editando=c.id; convertir=null;
+    const d=$('#f-cita').closest('details'); d.open=true;
+    $('#c-que').value=c.que; $('#c-fecha').value=c.fecha; $('#c-hora').value=c.hora; $('#c-donde').value=c.donde||''; $('#c-nota').value=c.nota||'';
+    $('#c-guardar').textContent='Guardar cambios'; $('#c-cancelar').hidden=false;
+    d.scrollIntoView({block:'center'}); $('#c-que').focus({preventScroll:true});
+  }
+  function terminarEdicion(){
+    editando=null; $('#f-cita').reset(); $('#c-guardar').textContent='Guardar cita'; $('#c-cancelar').hidden=true; $('#f-cita').closest('details').open=false;
+  }
+  function renderPendientes(){
+    const ul=$('#pendientes'); const ps=[...st.pendientes].sort((a,b)=>a.limite.localeCompare(b.limite));
+    ul.innerHTML = ps.length ? '' : '<li class="card muted">No estamos esperando ninguna llamada.</li>';
+    ps.forEach(p => {
+      const quedan=diasEntre(hoyISO(), p.limite), late=quedan<=0, tipo=p.tipo||'cita';
+      const li=document.createElement('li'); li.className='item pend'+(late?' late':'');
+      li.innerHTML='<span class="chip">'+esc(TIPOS[tipo]||'Otra cosa')+' · '+(late?'ya pasó el plazo: conviene llamar':'esperando su llamada')+'</span>'+
+        '<div><b class="big" style="display:block">'+esc(p.que)+'</b>'+
+        (p.ultima?'<span class="muted">'+(tipo==='cita'?'Última cita: ':'Esperando desde el ')+esc(fmtDiaA(p.ultima))+' ('+haceCuanto(p.ultima)+')</span><br>':'')+
+        '<span>'+(late?'El plazo era el '+esc(fmtDia(p.limite))+'. Llame usted al centro.':'Si no llaman antes del <b>'+esc(fmtDia(p.limite))+'</b>, llame usted (quedan '+quedan+' días).')+'</span>'+
+        (p.nota?'<br><span class="muted">'+esc(p.nota)+'</span>':'')+'</div>'+
+        '<div class="ex-actions"><button class="btn small" type="button" data-ok>'+(tipo==='cita'?'Ya me han dado cita':'Ya han llamado')+'</button><button class="btn ghost small" type="button" data-del>Borrar</button></div>';
+      li.querySelector('[data-ok]').addEventListener('click', () => {
+        if(tipo!=='cita'){ anotar(TIPOS[tipo]||'Otra cosa', p.que, 'Ya llamaron'); st.pendientes=st.pendientes.filter(x=>x.id!==p.id); guardar(); todo(); aviso('Hecho: '+p.que+' ya ha llamado'); return; }
+        convertir=p.id; const d=$('#f-cita').closest('details'); d.open=true; $('#c-que').value=p.que; $('#c-fecha').focus();
+        aviso('Escriba el día y la hora de la cita');
+      });
+      li.querySelector('[data-del]').addEventListener('click', () => pedirConfirmacion(li, '¿Borrar esta cita pendiente?', () => { st.pendientes=st.pendientes.filter(x=>x.id!==p.id); guardar(); todo(); aviso('Pendiente borrada'); }));
       ul.appendChild(li);
     });
   }
@@ -415,41 +815,188 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
     const ul=$('#avisos'); const h=hechosHoy();
     ul.innerHTML='';
     avisosOrdenados().forEach(a => {
-      const li=document.createElement('li'); li.className='item'+(h[a.id]?' done':'');
-      li.innerHTML='<div class="when"><b>'+esc(a.hora)+'</b><span>'+(a.tipo==='med'?'Medicación':'Tarea')+'</span></div><div class="grow"><b>'+esc(a.que)+'</b>'+(a.nota?'<span class="muted">'+esc(a.nota)+'</span>':'')+'</div>'+
-        '<button class="btn small '+(h[a.id]?'ghost':'')+'" type="button">'+(h[a.id]?'Hecho ✓':'Marcar hecho')+'</button>';
-      li.querySelector('button').addEventListener('click', () => { hechosHoy()[a.id]=!h[a.id]; guardar(); todo(); });
+      const li=document.createElement('li'); li.className='item cita'+(h[a.id]?' done':'');
+      li.innerHTML='<div class="when"><b>'+esc(a.hora)+'</b><span>'+(a.tipo==='med'?'Medicación':'Tarea')+'</span></div><div class="grow"><b>'+esc(a.que)+'</b>'+(a.nota?'<span class="muted">'+esc(a.nota)+'</span>':'')+(h[a.id]?'<span class="por" style="color:var(--ok);font-weight:700">'+esc(quien(a.id))+'</span>':'')+'</div>'+
+        '<div class="acciones"><button class="btn small '+(h[a.id]?'ghost':'')+'" type="button" data-hecho>'+(h[a.id]?'Hecho ✓':'Marcar hecho')+'</button>'+
+        '<button class="btn ghost small" type="button" data-edit aria-label="Modificar aviso '+esc(a.que)+'">Modificar</button>'+
+        '<button class="btn ghost small" type="button" data-del aria-label="Borrar aviso '+esc(a.que)+'">Borrar</button></div>';
+      li.querySelector('[data-hecho]').addEventListener('click', () => { marcar(a.id, !h[a.id]); todo(); });
+      li.querySelector('[data-edit]').addEventListener('click', () => editarAviso(a));
+      li.querySelector('[data-del]').addEventListener('click', () => pedirConfirmacion(li, '¿Borrar este aviso?', () => { st.avisos=st.avisos.filter(x=>x.id!==a.id); guardar(); todo(); aviso('Aviso borrado'); }));
       ul.appendChild(li);
     });
   }
 
   function renderContactos(){
     const ul=$('#contactos'); ul.innerHTML='';
-    st.contactos.forEach(c => {
+    const GC=['Familia','Cuidadoras','Profesionales sanitarios','Servicios','Otros'];
+    const veCuidadoras=puede('cuidadoras'), miNombre=(yo()&&yo().nombre)||'';
+    const visibles=st.contactos.filter(c => veCuidadoras || c.grupo!=='Cuidadoras' || c.nombre===miNombre);
+    const ocultos=st.contactos.length-visibles.length;
+    const orden=[...visibles].sort((a,b)=>GC.indexOf(a.grupo||'Otros')-GC.indexOf(b.grupo||'Otros'));
+    let ultimo=null;
+    orden.forEach(c => {
+      const g=c.grupo||'Otros';
+      if(g!==ultimo){ const hli=document.createElement('li'); hli.innerHTML='<h3 style="padding-top:8px">'+esc(g)+'</h3>'; ul.appendChild(hli); ultimo=g; }
       const li=document.createElement('li'); li.className='card';
       li.innerHTML='<div class="row"><div class="grow"><p class="big">'+esc(c.nombre)+'</p><p class="muted">'+esc(c.rol||'')+'</p><p class="phone">'+esc(c.tel)+'</p></div></div>'+
-        '<div class="ex-actions"><a class="btn" href="tel:'+esc(c.tel.replace(/\s/g,''))+'">Llamar</a><button class="btn ghost" type="button" data-copy>Copiar número</button></div>';
+        '<div class="ex-actions"><a class="btn" href="tel:'+esc(c.tel.replace(/\s/g,''))+'">Llamar</a><button class="btn ghost" type="button" data-copy aria-label="Copiar número">Copiar</button></div>'+
+        '<div class="acciones"><button class="btn ghost small" type="button" data-edit aria-label="Modificar contacto '+esc(c.nombre)+'">Modificar</button><button class="btn ghost small" type="button" data-del aria-label="Borrar contacto '+esc(c.nombre)+'">Borrar</button></div>';
+      li.querySelector('[data-edit]').addEventListener('click', () => editarContacto(c));
+      li.querySelector('[data-del]').addEventListener('click', () => pedirConfirmacion(li, '¿Borrar este contacto?', () => { st.contactos=st.contactos.filter(x=>x.id!==c.id); guardar(); todo(); aviso('Contacto borrado'); }));
       li.querySelector('[data-copy]').addEventListener('click', () => {
         const ok=()=>aviso('Número copiado');
         try{ navigator.clipboard.writeText(c.tel).then(ok, ()=>seleccionar(li.querySelector('.phone'))); }catch(e){ seleccionar(li.querySelector('.phone')); }
       });
       ul.appendChild(li);
     });
+    if(ocultos>0){ const n=document.createElement('li'); n.className='card muted'; n.textContent='Los contactos de las demás cuidadoras solo los ve la familia.'; ul.appendChild(n); }
   }
   function seleccionar(el){ const r=document.createRange(); r.selectNodeContents(el); const s=getSelection(); s.removeAllRanges(); s.addRange(r); aviso('Número seleccionado: puede copiarlo'); }
 
-  function todo(){ renderHoy(); renderCitas(); renderAvisos(); renderContactos(); }
+  function todo(){ renderPerfil(); renderDocs(); renderHoy(); renderCitas(); renderPendientes(); renderHistorial(); renderAvisos(); renderContactos(); }
 
   /* ---------- Formularios ---------- */
   $('#f-cita').addEventListener('submit', e => { e.preventDefault();
-    st.citas.push({id:uid(), que:$('#c-que').value.trim(), fecha:$('#c-fecha').value, hora:$('#c-hora').value, donde:$('#c-donde').value.trim()});
-    guardar(); e.target.reset(); e.target.closest('details').open=false; todo(); aviso('Cita guardada'); });
+    const datos={que:$('#c-que').value.trim(), fecha:$('#c-fecha').value, hora:$('#c-hora').value, donde:$('#c-donde').value.trim(), nota:$('#c-nota').value.trim()};
+    const eraEdicion=!!editando;
+    if(editando){ const c=st.citas.find(x=>x.id===editando); if(c) Object.assign(c, datos); }
+    else { st.citas.push({id:uid(), ...datos}); }
+    if(convertir){ const pc=st.pendientes.find(x=>x.id===convertir); if(pc) anotar('Cita', pc.que, 'Llamaron para dar cita: '+fmtDiaA(datos.fecha)); st.pendientes=st.pendientes.filter(x=>x.id!==convertir); convertir=null; }
+    guardar(); terminarEdicion(); todo(); aviso(eraEdicion?'Cita modificada':'Cita guardada'); });
+  $('#c-cancelar').addEventListener('click', terminarEdicion);
+  $('#f-pend').addEventListener('submit', e => { e.preventDefault();
+    st.pendientes.push({id:uid(), tipo:$('#p-tipo').value, que:$('#p-que').value.trim(), ultima:$('#p-ultima').value, limite:$('#p-limite').value, nota:$('#p-nota').value.trim()});
+    guardar(); e.target.reset(); e.target.closest('details').open=false; todo(); aviso('Llamada pendiente guardada'); });
+  let editandoAviso=null;
+  function editarAviso(a){
+    editandoAviso=a.id; const d=$('#f-aviso').closest('details'); d.open=true;
+    $('#a-que').value=a.que; $('#a-hora').value=a.hora; $('#a-tipo').value=a.tipo; $('#a-nota').value=a.nota||'';
+    $('#a-guardar').textContent='Guardar cambios'; $('#a-cancelar').hidden=false;
+    d.scrollIntoView({block:'center'}); $('#a-que').focus({preventScroll:true});
+  }
+  function terminarAviso(){ editandoAviso=null; $('#f-aviso').reset(); $('#a-guardar').textContent='Guardar aviso'; $('#a-cancelar').hidden=true; $('#f-aviso').closest('details').open=false; }
+  $('#a-cancelar').addEventListener('click', terminarAviso);
   $('#f-aviso').addEventListener('submit', e => { e.preventDefault();
-    st.avisos.push({id:uid(), que:$('#a-que').value.trim(), hora:$('#a-hora').value, tipo:$('#a-tipo').value, nota:$('#a-nota').value.trim()});
-    guardar(); e.target.reset(); e.target.closest('details').open=false; todo(); aviso('Aviso guardado'); });
+    const datos={que:$('#a-que').value.trim(), hora:$('#a-hora').value, tipo:$('#a-tipo').value, nota:$('#a-nota').value.trim()};
+    const era=!!editandoAviso;
+    if(editandoAviso){ const a=st.avisos.find(x=>x.id===editandoAviso); if(a) Object.assign(a, datos); }
+    else { st.avisos.push({id:uid(), ...datos}); }
+    guardar(); terminarAviso(); todo(); aviso(era?'Aviso modificado':'Aviso guardado'); });
+  let editandoContacto=null;
+  function editarContacto(c){
+    editandoContacto=c.id; const d=$('#f-contacto').closest('details'); d.open=true;
+    $('#k-nombre').value=c.nombre; $('#k-rol').value=c.rol||''; $('#k-tel').value=c.tel; $('#k-grupo').value=c.grupo||'Otros';
+    $('#k-guardar').textContent='Guardar cambios'; $('#k-cancelar').hidden=false;
+    d.scrollIntoView({block:'center'}); $('#k-nombre').focus({preventScroll:true});
+  }
+  function terminarContacto(){ editandoContacto=null; $('#f-contacto').reset(); $('#k-guardar').textContent='Guardar contacto'; $('#k-cancelar').hidden=true; $('#f-contacto').closest('details').open=false; }
+  $('#k-cancelar').addEventListener('click', terminarContacto);
   $('#f-contacto').addEventListener('submit', e => { e.preventDefault();
-    st.contactos.push({id:uid(), nombre:$('#k-nombre').value.trim(), rol:$('#k-rol').value.trim(), tel:$('#k-tel').value.trim()});
-    guardar(); e.target.reset(); e.target.closest('details').open=false; todo(); aviso('Contacto guardado'); });
+    const datos={nombre:$('#k-nombre').value.trim(), rol:$('#k-rol').value.trim(), tel:$('#k-tel').value.trim(), grupo:$('#k-grupo').value};
+    const era=!!editandoContacto;
+    if(editandoContacto){ const c=st.contactos.find(x=>x.id===editandoContacto); if(c) Object.assign(c, datos); }
+    else { st.contactos.push({id:uid(), ...datos}); }
+    guardar(); terminarContacto(); todo(); aviso(era?'Contacto modificado':'Contacto guardado'); });
+
+  st.perfil ||= {nombre:'Rosamari', dependencia:'96 %', centro:'Centro de salud de Rota'};
+  $('#d-perfil').addEventListener('toggle', () => { if($('#d-perfil').open) pintarFormPerfil(); });
+  $('#f-perfil').addEventListener('submit', e => { e.preventDefault();
+    const p={}; CAMPOS.forEach(c => { p[c.k]=$('#pf-'+c.k).value.trim(); }); st.perfil=p;
+    guardar(); $('#d-perfil').open=false; todo(); aviso('Perfil guardado'); });
+
+  /* ---------- Documentos: apartados y fotos ---------- */
+  // Las fotos se guardan en IndexedDB (cabe más que en localStorage); si no se puede, solo en memoria.
+  const memImg={}; let dbDocs=null;
+  const abrirDB=()=>new Promise(res=>{ try{ const r=indexedDB.open('helpictus-docs',1); r.onupgradeneeded=()=>r.result.createObjectStore('img'); r.onsuccess=()=>{dbDocs=r.result; res(dbDocs);}; r.onerror=()=>res(null); }catch(e){ res(null); } });
+  const listoDB=abrirDB();
+  async function guardarImg(id, data){ memImg[id]=data; const db=await listoDB; if(!db) return; try{ await new Promise((ok,ko)=>{ const t=db.transaction('img','readwrite'); t.objectStore('img').put(data,id); t.oncomplete=ok; t.onerror=ko; }); }catch(e){} }
+  async function leerImg(id){ if(memImg[id]) return memImg[id]; const db=await listoDB; if(!db) return null; try{ return await new Promise(ok=>{ const r=db.transaction('img').objectStore('img').get(id); r.onsuccess=()=>{ if(r.result) memImg[id]=r.result; ok(r.result||null); }; r.onerror=()=>ok(null); }); }catch(e){ return null; } }
+  async function borrarImg(id){ delete memImg[id]; const db=await listoDB; if(!db) return; try{ db.transaction('img','readwrite').objectStore('img').delete(id); }catch(e){} }
+  function reducir(file){ return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>{ const img=new Image(); img.onload=()=>{ const max=1600, s=Math.min(1, max/Math.max(img.width,img.height)); const c=document.createElement('canvas'); c.width=Math.round(img.width*s); c.height=Math.round(img.height*s); c.getContext('2d').drawImage(img,0,0,c.width,c.height); res(c.toDataURL('image/jpeg',0.8)); }; img.onerror=rej; img.src=fr.result; }; fr.onerror=rej; fr.readAsDataURL(file); }); }
+  const ICONO_CARPETA='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
+  st.docs ||= {apartados:[{id:uid(), nombre:'Informes médicos'},{id:uid(), nombre:'Recetas'},{id:uid(), nombre:'Ayuda a la dependencia'}], fotos:[]};
+  let carpeta=null, fotoAbierta=null;
+  function renderDocs(){
+    if(!st.docs) st.docs={apartados:[], fotos:[]};
+    if(carpeta && !st.docs.apartados.find(a=>a.id===carpeta)) carpeta=null;
+    $('#docs-inicio').hidden=!!carpeta; $('#docs-carpeta').hidden=!carpeta;
+    if(!carpeta){
+      const box=$('#docs-apartados'); box.innerHTML='';
+      if(!st.docs.apartados.length) box.innerHTML='<p class="card muted">Todavía no hay apartados. Cree el primero abajo.</p>';
+      st.docs.apartados.forEach(a => {
+        const n=st.docs.fotos.filter(f=>f.apartado===a.id).length;
+        const b=document.createElement('button'); b.type='button'; b.className='carpeta';
+        b.innerHTML=ICONO_CARPETA+'<span class="grow"><b>'+esc(a.nombre)+'</b><span class="muted">'+(n? n+(n===1?' foto':' fotos') : 'Vacío')+'</span></span><span aria-hidden="true">›</span>';
+        b.addEventListener('click', () => { carpeta=a.id; renderDocs(); window.scrollTo({top:0}); });
+        box.appendChild(b);
+      });
+      return;
+    }
+    const a=st.docs.apartados.find(x=>x.id===carpeta);
+    const fs=st.docs.fotos.filter(f=>f.apartado===carpeta).sort((x,y)=>y.creado.localeCompare(x.creado));
+    $('#docs-titulo').textContent=a.nombre;
+    $('#docs-cuenta').textContent=fs.length ? fs.length+(fs.length===1?' foto':' fotos')+', la más reciente primero' : 'Todavía no hay fotos. Pulse «Añadir fotos» para hacer una foto o elegirla del móvil.';
+    if(document.activeElement!==$('#ap-renombre')) $('#ap-renombre').value=a.nombre;
+    const g=$('#docs-fotos'); g.innerHTML='';
+    fs.forEach(f => {
+      const b=document.createElement('button'); b.type='button'; b.className='foto';
+      b.innerHTML='<span class="ph" aria-hidden="true"></span><span><b>'+esc(f.nombre)+'</b></span>'+(f.desc?'<span class="desc">'+esc(f.desc)+'</span>':'')+'<span class="muted">'+esc(fmtDiaA(f.creado.slice(0,10)))+'</span>';
+      leerImg(f.id).then(src => { if(!src) return; const im=document.createElement('img'); im.src=src; im.alt=f.nombre; b.querySelector('.ph').replaceWith(im); });
+      b.addEventListener('click', () => abrirVisor(f));
+      g.appendChild(b);
+    });
+  }
+  async function abrirVisor(f, nueva){
+    fotoAbierta=f.id; $('#foto-borrar-box').innerHTML=''; $('#foto-pista').hidden=!nueva; $('#foto-desc').value=f.desc||'';
+    $('#visor-img').src=(await leerImg(f.id))||''; $('#visor-img').alt=f.nombre;
+    $('#foto-nombre').value=f.nombre;
+    const u=st.usuarios.find(x=>x.id===f.por);
+    $('#foto-info').textContent='Añadida el '+fmtDiaA(f.creado.slice(0,10))+' a las '+f.creado.slice(11,16)+(u?' por '+u.nombre:'');
+    $('#visor').hidden=false;
+    if(nueva){ $('#foto-nombre').focus(); $('#foto-nombre').select(); } else $('#visor-cerrar').focus();
+  }
+  function cerrarVisor(){ $('#visor').hidden=true; $('#visor-img').src=''; fotoAbierta=null; }
+  $('#visor-cerrar').addEventListener('click', cerrarVisor);
+  $('#f-foto').addEventListener('submit', e => { e.preventDefault(); const f=st.docs.fotos.find(x=>x.id===fotoAbierta); if(f){ f.nombre=$('#foto-nombre').value.trim(); f.desc=$('#foto-desc').value.trim(); guardar(); renderDocs(); $('#foto-pista').hidden=true; aviso('Guardado'); } });
+  $('#foto-borrar').addEventListener('click', () => pedirConfirmacion($('#foto-borrar-box'), '¿Borrar esta foto?', () => { const id=fotoAbierta; st.docs.fotos=st.docs.fotos.filter(x=>x.id!==id); borrarImg(id); guardar(); cerrarVisor(); renderDocs(); aviso('Foto borrada'); }));
+  $('#f-apartado').addEventListener('submit', e => { e.preventDefault(); const a={id:uid(), nombre:$('#ap-nombre').value.trim()}; st.docs.apartados.push(a); guardar(); e.target.reset(); $('#d-apartado').open=false; carpeta=a.id; renderDocs(); aviso('Apartado creado'); });
+  $('#docs-volver').addEventListener('click', () => { carpeta=null; renderDocs(); });
+  $('#f-renombrar').addEventListener('submit', e => { e.preventDefault(); const a=st.docs.apartados.find(x=>x.id===carpeta); if(a){ a.nombre=$('#ap-renombre').value.trim(); guardar(); renderDocs(); aviso('Apartado renombrado'); } });
+  $('#ap-borrar').addEventListener('click', () => {
+    const n=st.docs.fotos.filter(f=>f.apartado===carpeta).length;
+    pedirConfirmacion($('#ap-borrar-box'), n? '¿Borrar el apartado y sus '+n+' fotos?' : '¿Borrar este apartado?', () => {
+      st.docs.fotos.filter(f=>f.apartado===carpeta).forEach(f=>borrarImg(f.id));
+      st.docs.fotos=st.docs.fotos.filter(f=>f.apartado!==carpeta); st.docs.apartados=st.docs.apartados.filter(a=>a.id!==carpeta);
+      carpeta=null; guardar(); renderDocs(); aviso('Apartado borrado'); });
+  });
+  $('#docs-subir').addEventListener('change', async e => {
+    const files=[...e.target.files]; if(!files.length) return;
+    aviso(files.length===1?'Guardando la foto…':'Guardando '+files.length+' fotos…');
+    let ok=0, ultimaId=null;
+    for(const file of files){
+      try{
+        const data=await reducir(file); const id=uid(); await guardarImg(id, data);
+        const d=new Date(); const creado=hoyISO()+'T'+ahoraHM()+':'+pad(d.getSeconds())+'.'+String(ok).padStart(3,'0');
+        st.docs.fotos.push({id, apartado:carpeta, nombre:'Documento del '+fmtDiaA(hoyISO()), desc:'', creado, por:yoId}); ok++; ultimaId=id;
+      }catch(err){}
+    }
+    e.target.value=''; guardar(); renderDocs();
+    if(ok===1){ const f=st.docs.fotos.find(x=>x.id===ultimaId); if(f) abrirVisor(f, true); }
+    aviso(ok===files.length ? (ok===1?'Foto guardada':ok+' fotos guardadas') : 'No se pudo guardar alguna foto. Pruebe con otra imagen.');
+  });
+  $('#f-usuario').addEventListener('submit', e => { e.preventDefault();
+    const permisos={}; PERMISOS.forEach(p => { permisos[p.k]=$('#up-'+p.k).checked; });
+    st.usuarios.push({id:uid(), nombre:$('#u-nombre').value.trim(), rol:$('#u-rol').value.trim(), color:COLORES[st.usuarios.length % COLORES.length], permisos});
+    guardar(); e.target.reset(); $('#d-usuario').open=false; todo(); aviso('Perfil añadido'); });
+  $('#t-editar').addEventListener('click', () => { modoEditarDia=!modoEditarDia; renderHoy(); });
+  $('#t-cancelar').addEventListener('click', terminarTarea);
+  $('#f-tarea').addEventListener('submit', e => { e.preventDefault();
+    const datos={texto:$('#t-texto').value.trim(), grupo:$('#t-grupo').value};
+    const era=!!editandoTarea;
+    if(editandoTarea){ const t=st.tareas.find(x=>x.id===editandoTarea); if(t) Object.assign(t, datos); }
+    else { st.tareas.push({id:uid(), ...datos}); }
+    guardar(); terminarTarea(); renderHoy(); aviso(era?'Tarea modificada':'Tarea añadida al día'); });
 
   /* ---------- Confirmación dentro de la página ---------- */
   function pedirConfirmacion(cont, texto, siOk){
@@ -460,7 +1007,7 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
     const [si,no]=d.querySelectorAll('button'); si.addEventListener('click', siOk); no.addEventListener('click', ()=>d.remove()); no.focus();
   }
   $('#reset').addEventListener('click', () => pedirConfirmacion($('#reset-box'), 'Se borrarán los cambios y volverán los datos de ejemplo.', () => {
-    st=ejemplo(); guardar(); todo(); document.querySelector('#reset-box .confirm-in')?.remove(); aviso('Datos de ejemplo restaurados'); }));
+    st=ejemplo(); st.perfil={nombre:'Rosamari', dependencia:'96 %', centro:'Centro de salud de Rota'}; st.usuarios=usuariosEjemplo(); sembrarTareas(); modoEditarDia=false; guardar(); todo(); yoId=null; abrirPicker(); document.querySelector('#reset-box .confirm-in')?.remove(); aviso('Datos de ejemplo restaurados'); }));
 
   /* ---------- Mensajes breves ---------- */
   let tt; function aviso(t){ const el=$('#toast'); el.textContent=t; el.hidden=false; clearTimeout(tt); tt=setTimeout(()=>el.hidden=true, 2600); }
@@ -521,13 +1068,13 @@ footer.note{font-size:.8rem;color:var(--ink-soft);padding-top:28px}
     lanzados[a.id+hoyISO()]=true; delete pospuestos[a.id]; avisoActual=a;
     $('#al-t').textContent=a.hora+' · '+a.que; $('#al-n').textContent=a.nota||''; $('#alarm').hidden=false; pitido(); $('#al-ok').focus();
   }
-  $('#al-ok').addEventListener('click', ()=>{ if(avisoActual){ hechosHoy()[avisoActual.id]=true; guardar(); } avisoActual=null; $('#alarm').hidden=true; todo(); aviso('Marcado como hecho'); });
+  $('#al-ok').addEventListener('click', ()=>{ if(avisoActual){ marcar(avisoActual.id, true); } avisoActual=null; $('#alarm').hidden=true; todo(); aviso('Marcado como hecho'); });
   $('#al-later').addEventListener('click', ()=>{ if(avisoActual){ pospuestos[avisoActual.id]=Date.now()+10*60*1000; } avisoActual=null; $('#alarm').hidden=true; aviso('Se lo recordaremos en 10 minutos'); });
   setInterval(()=>{ revisar(); renderHoy(); }, 30000);
 
   /* ---------- Inicio ---------- */
   aplicarEscala(); todo(); pintarEj();
-  ir((location.hash||'#hoy').slice(1));
+  ir('hoy'); abrirPicker();
   revisar();
 })();
 </script>
